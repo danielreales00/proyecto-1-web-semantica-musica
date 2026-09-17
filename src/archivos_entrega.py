@@ -16,8 +16,6 @@ BASE = [
     ".gitignore",
 ]
 DOCS_ENTRADA = ["docs/diccionario_datos.md"]
-DOCS_SALIDA = ["resultados.json", "comparacion_dbpedia_wikidata.json"]
-DOCS_VERIFICACION = ["reproducibilidad_entrega.json"]
 
 
 def arbol(root, folder):
@@ -73,26 +71,6 @@ def entradas(root=ROOT):
     missing = [str(p.relative_to(root)) for p in files if not p.is_file()]
     if missing:
         raise FileNotFoundError("Entradas ausentes: " + ", ".join(sorted(missing)))
-    return sorted(files)
-
-
-def entregables(root=ROOT):
-    root = Path(root)
-    files = set(entradas(root))
-    files.update(root / "docs" / name for name in DOCS_SALIDA)
-    files.update(
-        root / "output/pdf" / name for name in ["informe_final.pdf", "modelo_anexo.pdf"]
-    )
-    files.update((root / "output/csv").glob("*.csv"))
-    files.update(p for p in (root / "output/sparql").glob("*.json"))
-    for name in DOCS_VERIFICACION:
-        if (root / "docs" / name).is_file():
-            files.add(root / "docs" / name)
-    missing = [str(p.relative_to(root)) for p in files if not p.is_file()]
-    if missing:
-        raise FileNotFoundError("Entregables ausentes: " + ", ".join(sorted(missing)))
-    if len(list((root / "output/csv").glob("*.csv"))) != 39:
-        raise ValueError("Se esperan exactamente 39 CSV consolidados")
     return sorted(files)
 
 

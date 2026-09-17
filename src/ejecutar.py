@@ -44,14 +44,7 @@ def main():
         action="store_true",
         help="Reconstruir CSV, sin SPARQL ni PDF",
     )
-    parser.add_argument(
-        "--empaquetar",
-        action="store_true",
-        help="Crear el ZIP después de reconstruir la entrega completa",
-    )
     args = parser.parse_args()
-    if args.solo_datos and args.empaquetar:
-        parser.error("--empaquetar requiere la ejecución completa")
     target = preparar_destino(args.destino)
     for folder in ["docs", "output/csv", "output/sparql", "data/processed", "tmp"]:
         (target / folder).mkdir(parents=True, exist_ok=True)
@@ -113,8 +106,6 @@ def main():
             ]:
                 run("exploraciones/sparql/" + script, extra_env=graph_env)
         run("latex/compilar.py", "--offline")
-    if args.empaquetar:
-        run("src/empaquetar.py")
     print(f"Entrega reconstruida en {target}")
 
 

@@ -67,29 +67,22 @@ python src/verificar_entrega.py
 
 Este comando ejecuta las pruebas automatizadas y repite el proceso completo en una carpeta temporal sin resultados precalculados. Compara los 39 CSV byte a byte, las métricas, la comparación de Wikidata y DBpedia, las ocho respuestas SPARQL y el texto de ambos PDF. El resultado queda en `docs/reproducibilidad_entrega.json`. Las fechas de ejecución y los metadatos internos de los PDF pueden variar.
 
-La reconstrucción necesita espacio temporal adicional para los CSV intermedios y el grafo. La verificación elimina su copia de trabajo al terminar. Los archivos temporales de una ejecución directa se pueden retirar después de validar y preparar de nuevo el paquete:
-
-```bash
-python src/empaquetar.py
-python src/limpiar_entrega.py --aplicar
-```
-
-La limpieza comprueba la integridad del paquete y de sus archivos antes de borrar copias, cachés e intermedios ajenos a la entrega. Conserva los archivos seleccionados y el entorno `.venv`, si existe.
+La reconstrucción necesita espacio temporal adicional para los CSV intermedios y el grafo. La verificación elimina su copia de trabajo al terminar.
 
 ## Código que se conserva
 
-`src/` contiene 29 módulos. Cada uno participa en la reproducción, en sus verificaciones o en la adquisición opcional de las fuentes. El contenido del informe se mantiene en `latex/`, separado de los programas que procesan datos.
+`src/` contiene 27 módulos. Cada uno participa en la reproducción, en sus verificaciones o en la adquisición opcional de las fuentes. El contenido del informe se mantiene en `latex/`, separado de los programas que procesan datos.
 
 | Función | Archivos en `src/` |
 |---|---|
-| Ejecutar, verificar y preparar la entrega | `ejecutar.py`, `archivos_entrega.py`, `verificar_entrega.py`, `empaquetar.py`, `limpiar_entrega.py` |
+| Ejecutar y verificar la reproducción | `ejecutar.py`, `archivos_entrega.py`, `verificar_entrega.py` |
 | Preparar la entrada y consultar las fuentes iniciales | `diagnostico.py`, `descargar.py`, `fuentes_masivas.py`, `wikidata.py`, `wikidata_etiquetas.py`, `dbpedia.py`, `comparar_fuentes.py` |
 | Reconstruir e integrar el piloto de las API | `musicbrainz.py`, `auditar_cache_musicbrainz.py`, `consolidar_piloto.py`, `integrar.py` |
 | Integrar la ampliación final | `ampliar_artistas.py`, `ampliar_albumes.py`, `consolidar_musicbrainz_completo.py`, `consolidar_acousticbrainz_dump.py`, `integrar_ampliacion.py` |
 | Repetir la adquisición y el filtrado de las bases completas | `descargar_musicbrainz_completo.py`, `extraer_musicbrainz_completo.py`, `detallar_musicbrainz_completo.py`, `descargar_musicbrainz_dump.py`, `descargar_acousticbrainz_dump.py`, `extraer_acousticbrainz_dump.py` |
 | Validar los datos | `validar.py`, `validar_ampliacion.py` |
 
-Se retiraron los scripts de resúmenes anteriores, el diagnóstico puntual de la API y los dos programas del mapeo histórico de 2016. También se eliminaron el generador antiguo de PDF basado en ReportLab, los generadores de notas auxiliares y las copias de consultas. El anexo utiliza los mismos archivos SPARQL que ejecuta el código. Las respuestas originales que respaldan el piloto se conservan porque forman parte de los resultados del informe.
+Se retiraron los scripts de resúmenes anteriores, el diagnóstico puntual de la API y los dos programas del mapeo histórico de 2016. Se retiraron asimismo los programas de empaquetado y limpieza usados para preparar la entrega. También se eliminaron el generador antiguo de PDF basado en ReportLab, los generadores de notas auxiliares y las copias de consultas. El anexo utiliza los mismos archivos SPARQL que ejecuta el código. Las respuestas originales que respaldan el piloto se conservan porque forman parte de los resultados del informe.
 
 Ruff revisa imports, errores comunes, formato y complejidad ciclomática. El límite de complejidad es 10 por función, sin excepciones a esa regla. Para ejecutar las mismas comprobaciones que GitHub:
 
