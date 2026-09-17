@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.pyc
+.ruff_cache/
+tmp/
+.DS_Store
+data/
+/grupo_2.csv
+/manifiesto_archivos.json
+output/*
+!output/pdf/
+output/pdf/*
+!output/pdf/informe_final.pdf
+!output/pdf/modelo_anexo.pdf

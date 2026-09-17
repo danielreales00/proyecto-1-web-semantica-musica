@@ -1,0 +1,3 @@
+requests==2.34.2
+pypdf==6.14.2
+pyoxigraph==0.5.11

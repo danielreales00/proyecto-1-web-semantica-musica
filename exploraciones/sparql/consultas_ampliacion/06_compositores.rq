@@ -1,0 +1,7 @@
+PREFIX mus: <https://example.org/musica/>
+SELECT ?compositor ?nombre (COUNT(DISTINCT ?c) AS ?canciones) WHERE {
+  ?c mus:grabacionDelVolcado/mus:interpretaObra/mus:compositor
+     ?compositor .
+  ?compositor mus:nombre ?nombre .
+} GROUP BY ?compositor ?nombre
+ORDER BY DESC(?canciones) ?nombre ?compositor LIMIT 10

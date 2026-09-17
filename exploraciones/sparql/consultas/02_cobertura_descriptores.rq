@@ -1,0 +1,5 @@
+PREFIX mus: <https://example.org/musica/>
+SELECT ?descriptor (COUNT(DISTINCT ?cancion) AS ?cantidad) WHERE {
+  ?cancion a mus:RegistroCancion ; mus:observacionAcustica ?observacion .
+  ?observacion mus:descriptor ?descriptor ; mus:valor ?valor ; mus:fuente mus:jmir .
+} GROUP BY ?descriptor ORDER BY ?descriptor

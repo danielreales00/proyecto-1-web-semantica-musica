@@ -1,0 +1,35 @@
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,top=1.8cm,bottom=1.8cm,left=2cm,right=2cm]{geometry}
+\usepackage{microtype}
+\usepackage{booktabs,tabularx,array,longtable}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{caption}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,urlcolor=blue!45!black,linkcolor=black,citecolor=black,pdfauthor={Grupo 2},pdflang={es}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4.5pt}
+\setlength{\emergencystretch}{1.5em}
+\renewcommand{\arraystretch}{1.13}
+\setlength{\tabcolsep}{5pt}
+\titleformat{\section}{\large\bfseries}{\thesection.}{0.5em}{}
+\titlespacing*{\section}{0pt}{9pt}{4pt}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection.}{0.5em}{}
+\titlespacing*{\subsection}{0pt}{6pt}{3pt}
+\captionsetup{font=small,labelfont=bf,skip=4pt,hypcap=false}
+\pagestyle{fancy}\fancyhf{}
+\fancyfoot[L]{\footnotesize Web Semántica MISIS -- Grupo 2}
+\fancyfoot[R]{\footnotesize\thepage}
+\renewcommand{\headrulewidth}{0pt}\renewcommand{\footrulewidth}{0.3pt}
+\setlength{\footskip}{22pt}
+\setlist{nosep,leftmargin=1.4em}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcommand{\archivo}[1]{\texttt{\small\detokenize{#1}}}
+\newcommand{\fuentepropia}{\par{\footnotesize Fuente: elaboración propia a partir de los datos y resultados incluidos en la entrega.}}
+\lstset{basicstyle=\ttfamily\footnotesize,breaklines=true,columns=fullflexible,keepspaces=true,showstringspaces=false,frame=single,rulecolor=\color{black!20},xleftmargin=3pt,xrightmargin=3pt,aboveskip=6pt,belowskip=6pt}

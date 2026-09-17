@@ -1,0 +1,8 @@
+PREFIX mus: <https://example.org/musica/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+SELECT ?propiedad (COUNT(DISTINCT ?c) AS ?canciones) WHERE {
+  VALUES ?propiedad { wdt:P27 wdt:P495 wdt:P136 wdt:P264
+                      wdt:P571 wdt:P569 wdt:P740 }
+  ?c mus:artistaSuministrado/mus:entidadWikidata ?artista .
+  ?artista ?propiedad ?valor .
+} GROUP BY ?propiedad ORDER BY DESC(?canciones)

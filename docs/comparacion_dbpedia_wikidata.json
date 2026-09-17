@@ -1,0 +1,67 @@
+{
+  "piloto": 1000,
+  "ambas": 702,
+  "solo_wikidata": 89,
+  "solo_dbpedia": 2,
+  "ninguna": 207,
+  "diferencia_dbpedia_menos_wikidata": -87,
+  "comparacion": "Cobertura de identidad por identificador suministrado. Los hechos no son equivalentes uno a uno: esquemas y propiedades consultadas distintos.",
+  "ejemplo_conteo_tipos": {
+    "artista": "Andrés Cabas",
+    "artist_mbid": "0696ab5b-a92b-4190-addc-48d3a4601111",
+    "alcance": "Clasificaciones de un mismo artista, verificadas en las respuestas guardadas del piloto.",
+    "dbpedia": {
+      "servicio": "https://dbpedia.org/sparql",
+      "fecha_consulta": "2026-09-16T17:45:33.087529+00:00",
+      "consulta_sha256": "43ba8cfead7d593f317909d8908345e849725b540bdad4f0b9ba0ffe5eb26c2c",
+      "archivo_respuesta": "data/raw/dbpedia/43ba8cfead7d593f317909d8908345e849725b540bdad4f0b9ba0ffe5eb26c2c.json",
+      "respuesta_sha256": "0d45f9077174a510b7eaf2245c7f4b5381871a8e8be7bff9f77c589887d8ce24",
+      "afirmaciones_de_tipo": [
+        {
+          "artista": "http://dbpedia.org/resource/Andrés_Cabas",
+          "propiedad": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+          "valor": "http://dbpedia.org/ontology/Animal"
+        },
+        {
+          "artista": "http://dbpedia.org/resource/Andrés_Cabas",
+          "propiedad": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+          "valor": "http://dbpedia.org/ontology/Artist"
+        },
+        {
+          "artista": "http://dbpedia.org/resource/Andrés_Cabas",
+          "propiedad": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+          "valor": "http://dbpedia.org/ontology/Eukaryote"
+        },
+        {
+          "artista": "http://dbpedia.org/resource/Andrés_Cabas",
+          "propiedad": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+          "valor": "http://dbpedia.org/ontology/MusicalArtist"
+        },
+        {
+          "artista": "http://dbpedia.org/resource/Andrés_Cabas",
+          "propiedad": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+          "valor": "http://dbpedia.org/ontology/Person"
+        },
+        {
+          "artista": "http://dbpedia.org/resource/Andrés_Cabas",
+          "propiedad": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+          "valor": "http://dbpedia.org/ontology/Species"
+        }
+      ]
+    },
+    "wikidata": {
+      "servicio": "https://query.wikidata.org/sparql",
+      "fecha_consulta": "2026-09-16T17:19:31.627739+00:00",
+      "consulta_sha256": "ac87a0f83e8e6dd74b4f618a48bcf2fff3c4c85d1342d36ff6312d5f678328e8",
+      "archivo_respuesta": "data/raw/wikidata/ac87a0f83e8e6dd74b4f618a48bcf2fff3c4c85d1342d36ff6312d5f678328e8.json",
+      "respuesta_sha256": "5497e15f63f5e2cca10952b23d4f0cb1fb3259d91fe9663db3b16b4c20ab334f",
+      "afirmaciones_de_tipo": [
+        {
+          "artista": "http://www.wikidata.org/entity/Q2849005",
+          "propiedad": "http://www.wikidata.org/prop/direct/P31",
+          "valor": "http://www.wikidata.org/entity/Q5"
+        }
+      ]
+    }
+  }
+}

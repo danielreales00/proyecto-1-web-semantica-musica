@@ -1,0 +1,266 @@
+{
+  "canciones_originales": 100000,
+  "canciones_conservadas": 100000,
+  "canciones_enriquecidas": 99990,
+  "canciones_sin_enriquecer": 10,
+  "cobertura_por_fuente": {
+    "jmir": 99465,
+    "wikidata_artista": 78748,
+    "musicbrainz_artista_completo": 92790,
+    "tagtraum": 29392,
+    "musicbrainz_grupo_lanzamiento": 47587,
+    "musicbrainz_grabacion_completo": 32175,
+    "acousticbrainz_dump": 18588,
+    "musicbrainz_artista": 5493,
+    "musicbrainz_grabacion": 313,
+    "acousticbrainz": 178
+  },
+  "artistas_referenciados": 48592,
+  "generos_distintos_tagtraum": 15,
+  "relaciones_genero": 38728,
+  "submuestra_api": 1000,
+  "estados_reconciliacion": {
+    "sin_coincidencia_conservadora": 655,
+    "ambigua": 26,
+    "aceptada": 313,
+    "candidatos_truncados": 6
+  },
+  "nombres_artista_validados_submuestra": 871,
+  "grabaciones_musicbrainz": 313,
+  "lanzamientos_musicbrainz": 133,
+  "obras_musicbrainz": 139,
+  "relaciones_musicbrainz": 228,
+  "acousticbrainz_registros": 178,
+  "acousticbrainz_estados": {
+    "200": 178,
+    "sin_datos_en_lote_200": 125,
+    "404": 10
+  },
+  "grabaciones_con_detalle": 50,
+  "grabaciones_detalle_pendiente": 263,
+  "ampliacion_artistas": {
+    "canciones": 100000,
+    "artistas_consultados": 27441,
+    "artistas_con_vinculo_unico": 19727,
+    "artistas_ambiguos": 21,
+    "hechos_aceptados": 110668,
+    "hechos_excluidos_por_ambiguedad": 220,
+    "canciones_con_metadatos_artista_antes": 5493,
+    "canciones_con_metadatos_artista_wikidata_sin_tipo": 78748,
+    "canciones_con_metadatos_artista_union": 79522,
+    "canciones_enriquecidas_total": 99921,
+    "por_propiedad": {
+      "P31": {
+        "artistas": 19724,
+        "canciones": 79527,
+        "hechos": 20191
+      },
+      "P27": {
+        "artistas": 9369,
+        "canciones": 39850,
+        "hechos": 9900
+      },
+      "P495": {
+        "artistas": 9472,
+        "canciones": 37091,
+        "hechos": 9541
+      },
+      "P136": {
+        "artistas": 16530,
+        "canciones": 69275,
+        "hechos": 28070
+      },
+      "P264": {
+        "artistas": 12190,
+        "canciones": 54786,
+        "hechos": 20928
+      },
+      "P571": {
+        "artistas": 6731,
+        "canciones": 28401,
+        "hechos": 6747
+      },
+      "P569": {
+        "artistas": 9138,
+        "canciones": 39206,
+        "hechos": 9384
+      },
+      "P740": {
+        "artistas": 5843,
+        "canciones": 25017,
+        "hechos": 5907
+      }
+    },
+    "profundidad_numero_propiedades_distintas_sin_tipo": {
+      "0": 21252,
+      "1": 2849,
+      "2": 8449,
+      "3": 14432,
+      "4": 34527,
+      "5": 18471,
+      "6": 20
+    },
+    "evidencia_verificada": true,
+    "etiquetas_recuperadas": 6222
+  },
+  "ampliacion_albumes": {
+    "canciones_evaluadas": 100000,
+    "pares_artista_album": 68230,
+    "estados": {
+      "sin_coincidencia": 49611,
+      "unica": 47587,
+      "ambigua": 2802
+    },
+    "grupos_examinados": 4512489,
+    "grupos_candidatos": 35003,
+    "grupos_aceptados": 30503,
+    "grupos_con_genero": 22890,
+    "canciones_con_genero_del_grupo": 35542,
+    "canciones_con_fecha_del_grupo": 46715,
+    "relaciones_genero": 70420,
+    "creditos": 31500,
+    "relaciones": 62754,
+    "tipos_primarios": {
+      "Album": 27053,
+      "Single": 2020,
+      "EP": 1199,
+      "Other": 34,
+      "": 197
+    },
+    "canciones_enriquecidas_total": 99948,
+    "archivo_fuente_sha256": "c3f2fe0649a183c09db5950251ab5991dd876a1b36daff6c3475978c87b78f47",
+    "subconjunto_sha256": "4be1c0303a16f26eb18dca8637d07e781ec90a0a673ae20f477440646ed0f905",
+    "fecha_snapshot": "20260912-001001",
+    "regla": "Titulo normalizado exacto y MBID del artista suministrado presente en los creditos; grupo unico en el archivo examinado. No identifica grabaciones ni ediciones concretas."
+  },
+  "ampliacion_grabaciones": {
+    "canciones_evaluadas": 100000,
+    "estados": {
+      "sin_coincidencia_conservadora": 65865,
+      "ambigua": 1960,
+      "aceptada": 32175
+    },
+    "grabaciones": 32140,
+    "obras": 9878,
+    "lanzamientos": 57333,
+    "creditos": 33439,
+    "sellos": 8699,
+    "relaciones_lanzamiento_sello": 61502,
+    "relaciones": 79223,
+    "relaciones_por_tipo": {
+      "performance": 10093,
+      "remixer": 207,
+      "producer": 8038,
+      "mix": 4515,
+      "engineer": 4560,
+      "instrument": 17640,
+      "conductor": 368,
+      "vocal": 6051,
+      "programming": 539,
+      "recording": 2866,
+      "instrument arranger": 302,
+      "arranger": 1142,
+      "performer": 620,
+      "performing orchestra": 144,
+      "editor": 489,
+      "chorus master": 11,
+      "concertmaster": 24,
+      "mix-DJ": 5,
+      "orchestrator": 335,
+      "mastering": 15,
+      "misc": 61,
+      "audio": 27,
+      "sound": 46,
+      "samples from artist": 13,
+      "artists and repertoire": 18,
+      "legal representation": 2,
+      "booking": 2,
+      "phonographic copyright": 76,
+      "vocal arranger": 58,
+      "balance": 1,
+      "art direction": 6,
+      "creative direction": 6,
+      "instrument technician": 14,
+      "design/illustration": 2,
+      "field recordist": 3,
+      "design": 1,
+      "artwork": 1,
+      "composer": 8136,
+      "lyricist": 5000,
+      "writer": 7674,
+      "translator": 66,
+      "publishing": 28,
+      "previous attribution": 3,
+      "dedication": 4,
+      "premiere": 4,
+      "named after work": 6,
+      "scriptwriter": 1
+    },
+    "isrc": 12409,
+    "artistas": 47145,
+    "canciones_con_metadatos_artista": 92790,
+    "canciones_con_obra": 10043,
+    "canciones_con_compositor_o_autor": 8828,
+    "canciones_enriquecidas": 99990,
+    "coincidencias_mismo_mbid_piloto": 313,
+    "conflictos_mbid_piloto": 0,
+    "fecha_snapshot": "20260916-002105"
+  },
+  "canciones_con_metadatos_artista_union": 93571,
+  "canciones_con_grabacion_union": 32175,
+  "tablas_csv": 39,
+  "ampliacion_acousticbrainz": {
+    "fecha_snapshot": "20220623",
+    "canciones_evaluadas": 100000,
+    "grabaciones_objetivo": 32140,
+    "grabaciones_con_datos": 18560,
+    "analisis_vinculados": 181789,
+    "campos_caracteristicas": [
+      "average_loudness",
+      "dynamic_complexity",
+      "mfcc_zero_mean",
+      "bpm",
+      "bpm_histogram_first_peak_bpm_mean",
+      "bpm_histogram_first_peak_bpm_median",
+      "bpm_histogram_second_peak_bpm_mean",
+      "bpm_histogram_second_peak_bpm_median",
+      "danceability",
+      "onset_rate",
+      "key_key",
+      "key_scale",
+      "tuning_frequency",
+      "tuning_equal_tempered_deviation"
+    ],
+    "filas_con_clave_repetida_por_familia": {
+      "lowlevel": 24,
+      "rhythm": 24,
+      "tonal": 24
+    },
+    "mbid_con_conflicto_analisis_cero": [],
+    "mbid_sin_analisis_cero": [],
+    "numero_caracteristicas": 14,
+    "estados": {
+      "sin_grabacion_reconciliada": 67825,
+      "disponible": 18588,
+      "sin_datos_en_volcado": 13587
+    },
+    "canciones_con_datos": 18588,
+    "canciones_piloto_con_datos": 178,
+    "canciones_adicionales_al_piloto": 18410,
+    "canciones_piloto_sin_datos_en_volcado": 0,
+    "comparaciones_valores_piloto": 890,
+    "discrepancias_valores_piloto": 0,
+    "canciones_bpm_mayor_120": 9848,
+    "valores_no_vacios_grabaciones": 259732,
+    "bytes_comprimidos": 3303745674,
+    "filas_por_archivo": 29460584,
+    "sha256_oficiales_verificados": true,
+    "politica_analisis": "submission_offset=0, sin promediar ni combinar offsets",
+    "limitaciones": [
+      "Snapshot 2022; MBID exacto, sin resolver redirecciones posteriores.",
+      "No se conoce la duración ni calidad del audio desde estos CSV compactos.",
+      "Selección reproducible de un análisis, no certificación de calidad acústica.",
+      "14 características seleccionadas oficialmente; no todos los campos JSON."
+    ]
+  }
+}

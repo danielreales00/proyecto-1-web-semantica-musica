@@ -1,0 +1,7 @@
+PREFIX mus: <https://example.org/musica/>
+SELECT ?trackId ?titulo ?artista ?bpm WHERE {
+  ?cancion a mus:RegistroCancion ; mus:trackId ?trackId ; mus:titulo ?titulo ;
+           mus:creditoOriginal ?artista ; mus:observacionAcustica ?observacion .
+  ?observacion mus:descriptor "bpm" ; mus:valor ?bpm ; mus:fuente mus:acousticbrainz .
+  FILTER(?bpm > 120)
+} ORDER BY DESC(?bpm) ?trackId LIMIT 20

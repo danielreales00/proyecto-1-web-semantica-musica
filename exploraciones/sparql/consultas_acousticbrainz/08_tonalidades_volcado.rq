@@ -1,0 +1,10 @@
+PREFIX mus: <https://example.org/musica/>
+SELECT ?tonalidad ?escala (COUNT(DISTINCT ?c) AS ?canciones)
+WHERE {
+  ?c mus:grabacionDelVolcado ?g .
+  ?g mus:analisisAcousticBrainz ?a .
+  ?a mus:key_key ?tonalidad ; mus:key_scale ?escala .
+}
+GROUP BY ?tonalidad ?escala
+ORDER BY DESC(?canciones) ?tonalidad ?escala
+LIMIT 10

@@ -1,0 +1,175 @@
+\documentclass[11pt,a4paper]{article}
+\input{preambulo}
+\input{tablas/cifras}
+\hypersetup{pdftitle={Anexo: modelo conceptual y evidencia SPARQL}}
+\begin{document}
+\begin{center}
+{\LARGE\bfseries Modelo conceptual y evidencia SPARQL}\par
+\vspace{4pt}{\normalsize Anexo de la etapa 1 -- Grupo 2}
+\end{center}
+\section{Entidades e identidad}
+El modelo distingue el registro suministrado, la grabación y la obra. Un \emph{RegistroCancion} conserva la identidad \archivo{track_id} de la entrada; una \emph{Grabacion} representa una realización sonora identificada por MusicBrainz; una \emph{ObraMusical} representa la composición. Por su parte, un \emph{Lanzamiento} identifica una edición publicada. El \emph{GrupoLanzamientos} reúne ediciones relacionadas, sin equivaler a una edición ni a una grabación. Estas entidades no se fusionan por semejanza de títulos.
+
+\begin{center}\small
+\captionof{table}{Clases y atributos principales del modelo conceptual.}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{3.5cm}Y@{}}
+\toprule Clase & Identidad, atributos y evidencia \\
+\midrule
+RegistroCancion & \archivo{track_id}; título, crédito original, lanzamiento textual, año y duración. Una instancia por fila de \archivo{canciones.csv}. \\
+Artista & \archivo{artist_mbid}; nombres observados y, cuando existen, nombre canónico, tipo y país. Incluye participantes adicionales recuperados en relaciones. \\
+Persona & Especialización de Artista para individuos clasificados como \emph{Person} por MusicBrainz. \\
+Agrupacion & Especialización de Artista para entidades clasificadas como \emph{Group}; otros tipos no se equiparan automáticamente. \\
+Grabacion & \archivo{recording_mbid}; título, duración, primera fecha reportada y estado del detalle. Se distingue el piloto API del volcado completo, que aporta \GrabacionesMasivas\ entidades. \\
+ObraMusical & \archivo{work_mbid}; título y, cuando están disponibles, tipo e idioma. Se incluyen obras relacionadas con otras obras. \\
+Lanzamiento & \archivo{release_mbid}; título, fecha, país, estado y código de barras disponibles. La fecha puede tener precisión parcial. \\
+GrupoLanzamientos & MBID de grupo; título, tipo primario, tipos secundarios y primera fecha publicada. Sus géneros permanecen en este nivel. \\
+SelloDiscografico & MBID y nombre; se vincula a una edición con su número de catálogo, sin inferir un contrato vigente con el artista. \\
+CreditoInterpretacion & Grabación, artista, posición, nombre acreditado y frase de unión; conserva la composición del crédito. \\
+GeneroMusical & Etiqueta e identidad de su vocabulario. No se equiparan géneros de fuentes distintas solo por su nombre. \\
+AsignacionGenero & Canción, género, papel mayoritario o minoritario y fuente; permite conservar la ambigüedad de clasificación. \\
+ObservacionAcustica & Canción o grabación, descriptor, valor, fuente y alcance de medición. Los campos vacíos no se transforman en cero. \\
+AfirmacionExterna & Sujeto, tipo de relación, objeto, dirección, atributos y procedencia. Representa las relaciones musicales recuperadas. \\
+Correspondencia & Identificadores de origen y destino, regla aplicada, estado y evidencia; solo una decisión aceptada enlaza una grabación. \\
+Fuente & Identificador, URL, archivo, fecha, huella y condiciones declaradas. Respalda las observaciones y correspondencias. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\textbf{Jerarquías y roles.} Persona y Agrupacion son subclases de Artista. En cambio, compositor, productor, letrista e intérprete se modelan como roles de relaciones: una misma persona puede ejercer varios. El archivo de artistas mantiene el MBID suministrado y no certifica que represente a todos los participantes del crédito textual.
+
+\newpage
+\section{Relaciones, cardinalidades y reglas}
+Las cardinalidades expresan lo permitido por el modelo, no la completitud de la extracción. En particular, cero relaciones recuperadas no demuestra inexistencia del hecho en el dominio.
+\begin{center}\small
+\captionof{table}{Relaciones principales y multiplicidad.}
+\begin{tabularx}{\linewidth}{@{}Y p{5.6cm}@{}}
+\toprule Relación & Cardinalidad e interpretación \\
+\midrule
+RegistroCancion referencia Artista & Cada registro tiene un MBID suministrado; un artista puede aparecer en muchos registros. \\
+RegistroCancion se reconcilia con Grabacion & Cada registro tiene cero o una grabación aceptada; varios registros podrían apuntar a la misma. \\
+RegistroCancion tiene AsignacionGenero & Cero o varias asignaciones por registro; cada asignación identifica un género y una fuente. \\
+RegistroCancion tiene ObservacionAcustica & Cero o varias observaciones; cada una distingue descriptor y fuente. \\
+Grabacion acredita Artista mediante CreditoInterpretacion & Cero o varios créditos por grabación; cada crédito conserva artista y posición. \\
+Grabacion interpreta ObraMusical & Muchos a muchos; admite grabaciones que reúnen varias obras. \\
+Grabacion aparece en Lanzamiento & Muchos a muchos; una misma grabación puede aparecer en ediciones distintas. \\
+ObraMusical se relaciona con ObraMusical & Muchos a muchos; se preservan el tipo y la dirección reportados, sin igualarlos a interpretación. \\
+AfirmacionExterna describe una relación & Un sujeto y un objeto por afirmación; sujetos y objetos pueden participar en varias afirmaciones. \\
+Observación, asignación o correspondencia proviene de Fuente & Cada registro de evidencia identifica su fuente; una fuente respalda muchos registros. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\textbf{Reglas de integración.} El título no constituye una clave de identidad. Se mantienen separados los identificadores de canción, artista, grabación, obra y lanzamiento. El año desconocido no se completa con una reedición. Asimismo, un género de artista no se hereda a sus canciones. Las relaciones conservan dirección, tipo y procedencia, y las búsquedas ambiguas no originan una identidad única.
+
+\textbf{Instancias recuperadas.} El registro \archivo{TRHECIK128F14692BC}, \emph{Longing}, con crédito Nusrat Fateh Ali Khan \& Michael Brook, se vinculó a la grabación \archivo{28a930f9-d6b6-451d-9004-c0670b693251}. Su respuesta atribuye a Michael Brook el rol de productor, entre otros. Este caso muestra que un crédito de interpretación y una función de producción requieren relaciones distintas.
+
+El registro \archivo{TRKIPUR128F4255E81}, interpretado por The Ventures, se vinculó a una grabación relacionada con la obra \emph{Jingle Bells}, \archivo{ca7bfba8-e5aa-3d25-9b4a-3b9d2626841d}. La canción de entrada, la grabación y la composición conservan identidades diferentes.
+
+\textbf{Preguntas de competencia.} El modelo permite preguntar qué fuente respalda una asignación de género, qué descriptores existen para una canción, qué grabaciones aparecen en varios lanzamientos, qué obras y participantes están relacionados y qué correspondencias siguen sin resolverse. Las consultas siguientes comprueban parte de estas preguntas con la información disponible.
+
+\newpage
+\section{Proyección experimental a RDF}
+Se implementó una proyección de los CSV para ejecutar consultas, sin definir todavía axiomas OWL. El espacio de nombres \url{https://example.org/musica/} es ilustrativo y local; no corresponde a un servicio público. Los nodos de canción conservan \archivo{trackId}, \archivo{titulo} y \archivo{creditoOriginal}. Cada campo acústico no vacío genera una observación con \archivo{descriptor}, \archivo{valor} y \archivo{fuente}; los valores cuantitativos se cargan como \archivo{xsd:decimal}. Los MBID aceptados permiten enlazar grabaciones y lanzamientos.
+
+La proyección incluye 100.000 canciones, los descriptores jMIR de 99.465 registros y los campos del piloto AcousticBrainz para 178. El volcado acústico añade un análisis para cada una de \GrabacionesAcousticBrainz\ grabaciones, vinculadas a \CancionesAcousticBrainz\ canciones. La ampliación agrega artistas de Wikidata, grabaciones y obras del volcado completo y grupos de lanzamientos. El número de triples, registrado en los archivos de resumen, depende del mapeo y no equivale a hechos musicales independientes. Se proyectan relaciones seleccionadas; no se incluyen todos los campos de procedencia. La evidencia completa sigue en los CSV, cuyos hashes se registran junto con los resultados.
+
+\subsection{Q1: valores acústicos de una canción}
+\lstinputlisting{../exploraciones/sparql/consultas/01_descriptores_cancion.rq}
+\input{tablas/descriptores}
+
+Los nombres base de la tabla corresponden a las columnas de la fuente al sustituir espacios por guiones bajos y añadir \archivo{_Overall_Average_1} o \archivo{_Overall_Standard_Deviation_1}. Los números se conservan en la escala original; no se infieren unidades. Esta consulta verifica disponibilidad y lectura de los 16 valores, sin interpretar por sí misma el contenido musical.
+
+\newpage
+\subsection{Q2: cobertura por descriptor}
+\lstinputlisting{../exploraciones/sparql/consultas/02_cobertura_descriptores.rq}
+La consulta devuelve 16 filas, cada una con 99.465 canciones distintas. El uso de \archivo{DISTINCT} evita contar varias veces una canción para un mismo descriptor.
+
+\subsection{Q3: selección por tempo}
+\lstinputlisting{../exploraciones/sparql/consultas/03_tempo_mayor_120.rq}
+El resultado conserva el título y el crédito de la entrada y los combina con el tempo de AcousticBrainz. El límite es de 20 filas, ordenadas por BPM descendente y luego por identificador. Los valores son estimaciones de la fuente; no se corrigieron posibles errores ni confusiones entre tempo doble y mitad de tempo.
+
+\subsection{Q4: grabaciones en varios lanzamientos}
+\lstinputlisting{../exploraciones/sparql/consultas/04_varios_lanzamientos.rq}
+Los resultados de esta consulta se conservan en el JSON correspondiente al piloto. Por ejemplo, \emph{Found Out About You} tiene 25 lanzamientos recuperados y \emph{Longing}, cinco. La consulta cuenta identificadores distintos y no títulos de álbum, pero el resultado sigue limitado a los lanzamientos consultados. Los archivos \archivo{.rq}, las salidas JSON y el script que las contrasta con los CSV se entregan para repetir la comprobación.
+
+\newpage
+\section{Relaciones incorporadas con la ampliación}
+\textbf{Artista y contexto.} Cada MBID suministrado puede vincularse a cero o una entidad Wikidata aceptada. Las propiedades conservan sus identificadores: P27 (ciudadanía), P495 (país de origen), P136 (género del artista), P264 (sello), P571 (fundación), P569 (nacimiento) y P740 (formación). País, área y sello se representan mediante entidades identificadas, no mediante sustitución de los campos originales. Las correspondencias ambiguas permanecen como evidencia de revisión.
+
+\textbf{Grupo y edición.} Un registro tiene cero o un grupo de lanzamientos aceptado según título y artista. Un grupo puede tener varios géneros. Las ediciones recuperadas desde el núcleo relacional preservan un MBID diferente, fechas de publicación, país y código de barras cuando existen. No se trasladan fechas o géneros entre niveles por defecto.
+
+\textbf{Roles en obras y grabaciones.} Las tablas relacionales de MusicBrainz distinguen artista--grabación, grabación--obra y artista--obra. Cada relación conserva su tipo y orientación de origen. Las funciones de compositor, letrista, productor e intérprete son roles, no clases excluyentes de artista. Los instrumentos y otros atributos de relaciones se conservan como etiquetas reportadas por la fuente.
+
+\subsection{Q5: disponibilidad de propiedades del artista}
+\lstinputlisting{../exploraciones/sparql/consultas_ampliacion/05_propiedades_artistas.rq}
+La consulta cuenta canciones que referencian artistas con cada propiedad; no cuenta esas propiedades como atributos propios de las canciones. Por ejemplo, P136 cubre 69.275 canciones y P264 cubre 54.786. Una canción puede aparecer en varios grupos de este resultado.
+
+\subsection{Q6: compositores vinculados mediante obras}
+\lstinputlisting{../exploraciones/sparql/consultas_ampliacion/06_compositores.rq}
+Esta consulta utiliza únicamente correspondencias del volcado completo y relaciones explícitas de interpretación y composición. No equipara al artista acreditado con el compositor. El marcador \emph{[traditional]} se conserva como atribución genérica, no como persona identificada. Los conteos describen la entrada del proyecto y no el catálogo completo de cada persona.
+
+\newpage
+\subsection{Q7: géneros de los grupos de lanzamientos}
+\lstinputlisting{../exploraciones/sparql/consultas_ampliacion/07_generos_albumes.rq}
+\input{tablas/evidencia_ampliacion}
+La ruta conserva el grupo como sujeto de la clasificación. El resultado responde qué canciones están vinculadas a grupos con un género publicado, sin concluir que cada canción pertenezca a ese género. Los votos de MusicBrainz y la procedencia permanecen en los CSV.
+
+\section{Identidad y evidencia en las tablas nuevas}
+Los archivos con sufijo \archivo{masivos} corresponden al núcleo relacional actual de MusicBrainz. Las tablas del piloto API conservan su evidencia original; \archivo{recording_mbid_dump} identifica la decisión del volcado. Los estados y los MBID se mantienen separados para permitir revisar discrepancias entre capturas.
+
+El subconjunto de evidencia guarda las columnas originales de PostgreSQL COPY, una vez decodificados sus escapes, junto con el número de línea de cada tabla. El manifiesto vincula estos archivos con el SHA-256 del volcado examinado y con la huella del conjunto inicial. Se conservan candidatos aceptados y ambiguos; los CSV de entidades musicales finales incorporan únicamente los participantes y relaciones seleccionados.
+
+La reconstrucción puede leer ese subconjunto sin red. Para repetir la adquisición completa se dispone del descargador, del lector secuencial y del filtrador de tablas auxiliares. Este diseño mantiene la entrega manejable y documenta el origen de cada selección sin presentar el volcado completo como si todo su contenido formara parte del enriquecimiento.
+
+\subsection{Estados de la vinculación completa}
+\input{tablas/estados_vinculacion}
+Los 67.825 registros sin grabación reconciliada no pueden evaluarse por MBID en AcousticBrainz. Los 13.587 con MBID aceptado pero sin datos acústicos constituyen una ausencia diferente; ninguna categoría equivale a un HTTP 404. Una canción sin enlace de grabación puede conservar otros aportes por artista o por su identificador MSD.
+
+\newpage
+\section{Ampliación de AcousticBrainz mediante archivos completos}
+Los tres archivos compactos de 2022 contienen 29.460.584 filas cada uno. Se descargaron completos, se verificaron sus SHA-256 oficiales y se recorrieron secuencialmente. El subconjunto conserva únicamente MBID de grabación aceptados en MusicBrainz, con nombre del archivo interno y línea original. Una fila de análisis sin conexión con la entrada no cuenta como enriquecimiento.
+
+Una grabación puede tener varios análisis. Se selecciona \archivo{submission_offset=0} en las tres familias, sin promediar envíos ni combinar índices. Las repeticiones permanecen en la evidencia, pero se cuentan una sola vez por MBID e índice; los valores contradictorios en el índice elegido se excluyen. La regla permite reproducir la selección, pero no certifica que el audio analizado tenga la mejor calidad o exactamente la misma duración del registro original.
+
+\begin{center}\small
+\captionof{table}{Características conservadas del volcado compacto.}
+\begin{tabularx}{\linewidth}{@{}p{2cm}Y@{}}
+\toprule Familia & Características \\
+\midrule
+Lowlevel & Sonoridad media, complejidad dinámica y componente cero de MFCC. \\
+Rhythm & BPM, media y mediana del primer y segundo pico del histograma de BPM, danceability y tasa de inicios. \\
+Tonal & Tonalidad, escala, frecuencia de afinación y desviación del temperamento igual. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+Dieciocho grabaciones carecen de tonalidad, escala y cuatro resúmenes del histograma; esos campos quedan vacíos. Los nombres exactos y valores publicados se conservan en \archivo{acousticbrainz_masivo.csv}. Este archivo no contiene fuerza tonal, que sí estaba en la API del piloto, ni las clasificaciones de alto nivel. Un MBID ausente de la captura no se sustituye por coincidencia de título. Tampoco se calculan características a partir del audio.
+
+\subsection{Q8: canciones por tonalidad y escala}
+\lstinputlisting{../exploraciones/sparql/consultas_acousticbrainz/08_tonalidades_volcado.rq}
+\input{tablas/tonalidades}
+La consulta cuenta canciones distintas vinculadas al análisis elegido, no el número de envíos. El recorrido independiente de los CSV confirma sus resultados. En la proyección RDF, \archivo{analisisAcousticBrainz} enlaza grabación y análisis; las 14 propiedades mantienen sus nombres originales y la fuente se identifica por separado.
+
+
+\newpage
+\section{Rutas de vinculación y aportes por fuente}
+Cada aporte se alcanza desde una canción inicial. El siguiente esquema resume las rutas; las flechas expresan vínculos documentados, no equivalencia entre entidades.
+\begin{center}\small
+\begin{tabularx}{\linewidth}{@{}Y@{}}
+\toprule
+Canción $\rightarrow$ \archivo{track_id} exacto $\rightarrow$ descriptores jMIR y géneros tagtraum \\
+Canción $\rightarrow$ artista (MBID) $\rightarrow$ MusicBrainz / Wikidata (P434) $\rightarrow$ propiedades y relaciones \\
+Canción $\rightarrow$ grabación reconciliada $\rightarrow$ análisis AcousticBrainz de índice cero \\
+Grabación $\rightarrow$ obra $\rightarrow$ compositor; grabación $\rightarrow$ edición $\rightarrow$ sello \\
+Canción $\rightarrow$ título de álbum y MBID de artista $\rightarrow$ grupo de lanzamientos $\rightarrow$ género del grupo \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\input{tablas/aportes_por_fuente}
+\textbf{Unidad de conteo.} Cantidad cuenta valores no vacíos en jMIR; asignaciones de género en tagtraum y grupos; filas de relaciones musicales en MusicBrainz; afirmaciones simples en Wikidata; y análisis elegidos o valores no vacíos por grabación en AcousticBrainz. Estas magnitudes no se suman. Una relación o un valor puede alcanzar varias canciones, y una canción puede tener múltiples relaciones.
+
+\textbf{Cobertura de las rutas.} Canciones cuenta \archivo{track_id} distintos. Las relaciones de composición y letra se alcanzan mediante la interpretación explícita de una obra; producción e instrumentos se alcanzan por el MBID de grabación. Las propiedades de Wikidata se alcanzan por el MBID de artista y los géneros del grupo por su vínculo independiente. Ninguna de estas rutas transfiere automáticamente los atributos a la canción.
+
+\textbf{Análisis acústico y trazabilidad.} Un análisis se identifica por fuente, MBID de grabación e índice. Así agrupa observaciones con descriptor y valor. Cada grabación puede tener varios análisis publicados, aunque esta entrega selecciona uno. Las cifras se regeneran desde los CSV mediante \archivo{latex/generar_tablas.py}, que verifica las unidades y los conteos por fuente.
+
+\end{document}

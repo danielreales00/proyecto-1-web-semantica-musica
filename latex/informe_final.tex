@@ -1,0 +1,92 @@
+\documentclass[11pt,a4paper]{article}
+\input{preambulo}
+\setlength{\parskip}{3pt}
+\clubpenalty=10000
+\widowpenalty=10000
+\input{tablas/cifras}
+\hypersetup{pdftitle={Enriquecimiento de datos musicales: informe de etapa 1}}
+\begin{document}
+\begin{center}
+{\LARGE\bfseries Enriquecimiento de datos musicales}\par
+\vspace{4pt}{\normalsize Proyecto de Web Semántica MISIS -- Etapa 1}\par
+{\small Grupo 2 \;|\; septiembre de 2026}
+\end{center}
+\vspace{-7pt}
+\section{Objetivo y diagnóstico}
+En esta etapa ampliamos la información del conjunto inicial de 100.000 canciones. Para ello, usamos cinco fuentes externas y relacionamos sus datos con las canciones y sus artistas. De MusicBrainz obtuvimos información sobre grabaciones, álbumes, obras, compositores y sellos discográficos. Además, usamos Wikidata para conocer más sobre los artistas y tagtraum para añadir géneros musicales. Por su parte, jMIR y AcousticBrainz aportaron características acústicas ya calculadas, como el tempo, la tonalidad y la sonoridad. Así, conservamos todas las canciones originales y añadimos al menos un dato nuevo a \TotalEnriquecidas\ de ellas. Finalmente, organizamos los datos en archivos CSV que indican de dónde proviene cada aporte y cómo se relaciona con el conjunto inicial. También entregamos el código para repetir el proceso y un modelo conceptual inicial basado en los datos obtenidos.
+
+Al revisar los datos, confirmamos que cada canción tiene un identificador único. Encontramos 45.525 canciones con el año en cero, que interpretamos como año desconocido. Conservamos estas canciones y el valor recibido en la columna original \archivo{year}. Para las consultas, añadimos la columna \archivo{anio_normalizado} y dejamos esos casos vacíos. Así, el cero no se interpreta como una fecha real. Tampoco lo reemplazamos por fechas de otras ediciones, porque pueden corresponder a publicaciones posteriores de la misma canción.
+
+También encontramos 27.441 identificadores de artista de MusicBrainz, llamados MBID. Cada código identifica a un artista o agrupación, pero el nombre escrito puede incluir a varios participantes. Por ejemplo, un registro menciona a Meryl Streep, Julie Walters y Christine Baranski, aunque su MBID corresponde solo a Meryl Streep. Por eso, conservamos el nombre completo y vinculamos los datos externos al artista identificado, sin atribuir sus características a las demás intérpretes. En total, 3.729 MBID aparecen junto a distintos nombres en 21.903 registros.
+
+Además, identificamos 10.372 títulos con referencias a versiones, como grabaciones en vivo. Conservamos estas indicaciones para distinguir versiones al buscar correspondencias.
+
+\section{Fuentes de datos y consulta}
+Con esta revisión, pasamos a buscar información adicional en cinco fuentes externas. Usamos MusicBrainz y AcousticBrainz, sugeridas en el enunciado, y las complementamos con Wikidata, jMIR y tagtraum.
+
+\textbf{MusicBrainz.} Es una base de datos sobre artistas, grabaciones, obras y publicaciones musicales~\cite{mb}. Primero consultamos su API, un servicio que permite solicitar información desde el código. Ante los errores 503 recurrentes, descargamos su base principal del 16 de septiembre de 2026, de 7,5 GB comprimidos, y el archivo de grupos de lanzamientos del 12 de septiembre. Así pudimos buscar localmente grabaciones, compositores, productores y sellos relacionados con nuestras canciones.
+
+\textbf{AcousticBrainz.} Reúne características acústicas ya calculadas, como tempo, tonalidad y sonoridad~\cite{ab}. Inicialmente consultamos su API con los identificadores de grabación obtenidos en MusicBrainz. Después descargamos tres archivos de 2022, con un tamaño total de 3,30 GB. De ellos extrajimos hasta 14 características por grabación y las relacionamos con las canciones mediante esos mismos identificadores.
+
+\textbf{Wikidata.} Aporta datos sobre los artistas, como ciudadanía, género musical, sellos y fechas de nacimiento o fundación~\cite{wd}. La consultamos con SPARQL a través de su servicio público. Buscamos el MBID de cada artista en la propiedad P434, que almacena ese identificador. Guardamos las respuestas y aceptamos únicamente los enlaces que llevaban a una sola entidad.
+
+\textbf{jMIR.} Usamos un archivo publicado por TU Wien con 16 medidas acústicas calculadas sobre fragmentos de audio~\cite{jmir}. Lo descargamos completo y buscamos las canciones por su identificador \archivo{track_id}.
+
+\textbf{tagtraum.} Descargamos desde su sitio web el archivo CD2, que contiene géneros musicales asociados a canciones del Million Song Dataset~\cite{tagtraum}. También lo cruzamos por \archivo{track_id} y conservamos las etiquetas de género mayoritario y minoritario cuando estaban disponibles.
+
+\subsection{Prueba inicial}
+Después de revisar las fuentes, probamos los cruces con 1.000 canciones. Incluimos casos con año conocido y desconocido, y títulos con y sin referencias a versiones. jMIR aportó información para 994 canciones y tagtraum para 301. Al combinar ambas fuentes, enriquecimos 998 canciones. Esto nos llevó a extender esos cruces al conjunto completo.
+
+Sin embargo, esta cobertura se apoyaba principalmente en las características acústicas. Las consultas a MusicBrainz vincularon 313 canciones con grabaciones y AcousticBrainz aportó datos para 178. Por ello, ampliamos la búsqueda mediante los archivos descargados y consultamos Wikidata para los 27.441 MBID de artista.
+
+También comparamos Wikidata con DBpedia en el mismo piloto. Wikidata permitió relacionar artistas de 791 canciones, frente a 704 con DBpedia. Elegimos Wikidata por esta mayor cobertura y por su enlace directo mediante MBID. El total de afirmaciones no era directamente comparable. Por ejemplo, DBpedia clasificó a Andrés Cabas como persona, artista y artista musical, entre otras categorías. Wikidata lo clasificó como ser humano. Cada categoría suma una afirmación, aunque siga describiendo al mismo artista.
+
+Además, examinamos una correspondencia publicada en 2016 entre MSD y MusicBrainz~\cite{mapeo}. Finalmente, usamos los archivos actuales de MusicBrainz para respaldar la vinculación ampliada.
+
+\section{Extracción, reconciliación e integración}
+\subsection{Preparación y extracción}
+Para comparar los registros entre fuentes, creamos columnas adicionales con versiones normalizadas del título, el artista y el álbum. En ellas aplicamos Unicode NFKC, convertimos el texto a minúsculas y unificamos los espacios, conservando los acentos y las indicaciones de versión. De esta manera, mantuvimos el orden y los valores originales. También dejamos vacío el año normalizado cuando era desconocido, sin completarlo con fechas de reediciones.
+
+Con los datos preparados, recorrimos los archivos descargados de forma secuencial y seleccionamos los registros relacionados con nuestras canciones. En MusicBrainz, usamos el identificador del artista y los créditos para localizar posibles grabaciones. Luego contrastamos sus títulos y duraciones, y verificamos el álbum mediante las pistas y sus ediciones. Para poder revisar estas decisiones, guardamos tanto las coincidencias aceptadas como las ambiguas. A esta información añadimos los análisis acústicos publicados por jMIR y AcousticBrainz. En el caso de jMIR, corresponden a medias y desviaciones estándar de ocho descriptores.
+
+\subsection{Secuencia de vinculación}
+\textbf{1. Enlaces directos y contexto del artista.} El \archivo{track_id} enlaza jMIR y tagtraum con la canción. El MBID suministrado enlaza el artista con MusicBrainz y permite buscar su entidad Wikidata mediante P434. De 27.441 MBID consultados, Wikidata produjo 19.727 correspondencias únicas y 21 ambiguas. Estas últimas se excluyeron. Se aceptaron 110.668 afirmaciones, 90.477 distintas de P31. El tipo de entidad por sí solo no se cuenta como enriquecimiento sustantivo.
+
+\textbf{2. Reconciliación de la grabación.} Se exigen título y álbum normalizados exactos, presencia del MBID del artista en el crédito, diferencia de duración de máximo tres segundos y un único MBID elegible. Al recorrer la base descargada se evalúan todos sus candidatos: \CancionesMB\ canciones se aceptan, \CancionesMBAmbiguas\ quedan ambiguas y \CancionesMBSinCoincidencia\ no cumplen la regla. Las 313 aceptaciones del piloto coinciden con esta captura, pero conservan su evidencia separada.
+
+\textbf{3. Incorporación de entidades y relaciones.} El MBID de grabación permite recuperar créditos, obras y ediciones. Sus identificadores conducen a compositores, productores y sellos. En una ruta independiente, el título de álbum y el MBID acreditado identifican un grupo de lanzamientos solo si es único: 47.587 canciones se vinculan y 2.802 quedan ambiguas. El grupo reúne ediciones relacionadas y mantiene sus propios géneros y fechas. Estos atributos no se trasladan a la canción.
+
+\textbf{4. Enlace con AcousticBrainz.} Los \GrabacionesMasivas\ MBID de grabación aceptados se cruzan exactamente con los tres CSV acústicos, de 29.460.584 filas cada uno. Se selecciona el mismo índice de análisis cero en las tres familias, sin promediar envíos. Así, \GrabacionesAcousticBrainz\ grabaciones aportan datos para \CancionesAcousticBrainz\ canciones, frente a 178 en el piloto. Las filas repetidas se conservan como evidencia sin duplicar conteos. Los conflictos en el índice elegido se excluirían. No se encontró ninguno.
+
+\subsection{Procedencia y organización}
+La salida comprende \NumeroTablas\ CSV relacionados. Cada aporte conserva fuente e identificador de vínculo. Los archivos descargados añaden archivo, línea y SHA-256 verificado contra las sumas oficiales, y las consultas conservan URL, fecha y respuesta. Los estados distinguen ambigüedad, falta de correspondencia, dato ausente y consulta pendiente. Los clientes HTTP espacian solicitudes y se detienen ante fallos transitorios, con pausa persistente mínima de cinco minutos. El procesamiento local permite continuar sin depender de la API.
+
+\section{Coberturas, relaciones y evidencia SPARQL}
+La cobertura cuenta canciones distintas con al menos un aporte de cada fuente. Las categorías de la tabla~\ref{tab:cobertura} se superponen y no se suman. La unión alcanza \TotalEnriquecidas\ canciones. \CancionesContextoArtista\ quedan vinculadas a metadatos de artista al combinar MusicBrainz y Wikidata. Esta cifra no implica que tengan una grabación identificada o todos sus atributos completos.
+\input{tablas/cobertura}
+
+\textbf{Relaciones incorporadas.} El núcleo MusicBrainz aporta \RelacionesMusicales\ relaciones: entre ellas, \RelacionesProductor\ de producción y \RelacionesInstrumento\ de participación instrumental, que alcanzan \CancionesProductor\ y \CancionesInstrumento\ canciones, respectivamente. Además, \CancionesObra\ canciones enlazan una obra y \CancionesCompositor\ presentan una atribución de composición. El anexo desagrega relaciones y valores por fuente, con su unidad y número de canciones alcanzadas.
+
+\textbf{Consultas.} Una proyección RDF experimental en PyOxigraph permite recorrer las rutas de vinculación. Las ocho consultas SPARQL~\cite{sparql} se contrastaron con recorridos independientes de los CSV. La tabla~\ref{tab:evidencia_fuentes} presenta ejemplos de resultados, no conteos del catálogo completo de cada artista.
+\input{tablas/evidencia_fuentes}
+
+\newpage
+\section{Retos, validación y tecnologías}
+\textbf{Retos.} El principal problema de acceso fueron los errores 503 de MusicBrainz, que resolvimos usando archivos descargados de su base de datos. Además, las diferencias en títulos, versiones y duraciones dificultaron la vinculación. Por eso, aplicamos las reglas de correspondencia descritas y excluimos las coincidencias ambiguas. Aun así, algunas canciones pueden quedar sin vínculo aunque existan en la fuente. La cobertura también depende de los datos disponibles. jMIR describe fragmentos de audio y AcousticBrainz corresponde a una captura de 2022.
+
+\textbf{Validación y reproducción.} Comprobamos que se conservaran las 100.000 canciones y sus valores originales, y que las relaciones entre los CSV fueran consistentes. También repetimos el proceso sin conexión y obtuvimos los mismos \NumeroTablas\ archivos CSV, idénticos byte a byte. Estas comprobaciones verifican la consistencia del resultado, aunque no sustituyen una evaluación manual de la precisión de los vínculos. El código y las instrucciones para reproducir el proceso se incluyen en la entrega.
+
+\textbf{Tecnologías.} Usamos Python y Requests para consultar las fuentes y procesar sus archivos. Además, empleamos PyOxigraph para ejecutar las consultas SPARQL y LaTeX para preparar el informe y el anexo conceptual. Entregamos los datos en CSV con sus fuentes e identificadores de correspondencia.
+
+\vspace{-3pt}
+\begin{thebibliography}{9}\small
+\setlength{\itemsep}{1pt}\setlength{\parskip}{0pt}
+\bibitem{jmir} TU Wien. \emph{MSD Benchmarks: Downloads}, jMIR 1.0. \url{https://www.ifs.tuwien.ac.at/mir/msd/download.html}.
+\bibitem{tagtraum} H. Schreiber. \emph{Genre annotations for MSD}, CD2. \url{https://www.tagtraum.com/msd_genre_datasets.html}.
+\bibitem{mb} MusicBrainz. \emph{Database / Download}. \url{https://musicbrainz.org/doc/MusicBrainz_Database/Download}.
+\bibitem{ab} AcousticBrainz. \emph{Downloads: feature dumps}, 2022. \url{https://acousticbrainz.org/download}.
+\bibitem{wd} Wikidata. \emph{Data access}. \url{https://www.wikidata.org/wiki/Wikidata:Data_access}.
+\bibitem{mapeo} AcousticBrainz Labs. \emph{MSD to AcousticBrainz mapping}. 2016. \url{https://labs.acousticbrainz.org/million-song-dataset-mapping/}.
+\bibitem{sparql} W3C. \emph{SPARQL 1.1 Query Language}. 2013. \url{https://www.w3.org/TR/sparql11-query/}.
+\end{thebibliography}
+\end{document}

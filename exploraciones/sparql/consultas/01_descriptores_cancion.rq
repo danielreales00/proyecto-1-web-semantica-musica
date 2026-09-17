@@ -1,0 +1,8 @@
+PREFIX mus: <https://example.org/musica/>
+SELECT ?descriptor ?valor ?fuente WHERE {
+  ?cancion a mus:RegistroCancion ;
+           mus:trackId "TRMMMCJ128F930BFF8" ;
+           mus:observacionAcustica ?observacion .
+  ?observacion mus:descriptor ?descriptor ; mus:valor ?valor ; mus:fuente ?fuente .
+  FILTER(?fuente = mus:jmir)
+} ORDER BY ?descriptor

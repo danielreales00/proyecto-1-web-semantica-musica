@@ -1,0 +1,4 @@
+PREFIX mus: <https://example.org/musica/>
+SELECT ?genero (COUNT(DISTINCT ?c) AS ?canciones) WHERE {
+  ?c mus:grupoDelLanzamiento/mus:generoGrupo ?genero .
+} GROUP BY ?genero ORDER BY DESC(?canciones) ?genero LIMIT 10

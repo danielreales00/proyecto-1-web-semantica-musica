@@ -1,0 +1,7 @@
+PREFIX mus: <https://example.org/musica/>
+SELECT ?grabacion ?titulo (COUNT(DISTINCT ?lanzamiento) AS ?cantidad) WHERE {
+  ?cancion a mus:RegistroCancion ; mus:grabacionReconciliada ?grabacion .
+  ?grabacion mus:titulo ?titulo ; mus:apareceEn ?lanzamiento .
+} GROUP BY ?grabacion ?titulo
+HAVING(COUNT(DISTINCT ?lanzamiento) > 1)
+ORDER BY DESC(?cantidad) ?grabacion
