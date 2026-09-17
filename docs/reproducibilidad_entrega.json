@@ -1,10 +1,10 @@
 {
   "estado": "correcto",
-  "fecha_utc": "2026-09-17T04:51:15.595896+00:00",
+  "fecha_utc": "2026-09-17T04:57:44.197775+00:00",
   "modo": "reconstruccion_completa_sin_HTTP_desde_entradas_en_carpeta_nueva",
   "resultados_precalculados_copiados": false,
-  "entradas_verificadas": 3012,
-  "firma_entradas_sha256": "6c9f90a06dbfc5afae9c1532a1a4edc9a33cf696b5664ab5621e48878f4c141c",
+  "entradas_verificadas": 3010,
+  "firma_entradas_sha256": "91e27d8640acc705b59246d0b560a0ca651021c782f5a9ff0778a8238e063d49",
   "csv_identicos_byte_a_byte": 39,
   "csv_sha256": {
     "acousticbrainz.csv": "858907bdfeed847691fd061b46bd0b04e13124997e57269c55bf34da018ac570",
