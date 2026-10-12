@@ -3,8 +3,8 @@
 import json
 
 from ampliar_albumes import read, sha
-from diagnostico import ROOT
 from extraer_musicbrainz_completo import OUT, load_json, raw, saved, write_json
+from musica.comun.rutas import ROOT
 
 
 def main():

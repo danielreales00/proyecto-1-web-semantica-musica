@@ -17,7 +17,9 @@ from urllib.parse import urlsplit
 
 import requests
 
-from diagnostico import ROOT, escribir_csv, normalizar
+from musica.comun.archivos_csv import escribir_csv
+from musica.comun.normalizacion import normalizar
+from musica.comun.rutas import ROOT
 
 
 def espera_reintento(value, attempt):

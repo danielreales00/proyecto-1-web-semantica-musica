@@ -11,7 +11,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 from archivos_entrega import entradas
-from diagnostico import ROOT
+from musica.comun.rutas import ROOT
 
 
 def preparar_destino(destino):

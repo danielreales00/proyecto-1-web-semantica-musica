@@ -4,7 +4,7 @@ import csv
 import hashlib
 import json
 
-from diagnostico import ROOT
+from musica.comun.rutas import ROOT
 
 
 def ejemplo_tipos():

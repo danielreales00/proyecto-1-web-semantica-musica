@@ -10,7 +10,9 @@ import json
 import tarfile
 from collections import Counter, defaultdict
 
-from diagnostico import ROOT, escribir_csv, normalizar
+from musica.comun.archivos_csv import escribir_csv
+from musica.comun.normalizacion import normalizar
+from musica.comun.rutas import ROOT
 
 FOLDER = ROOT / "data/raw/musicbrainz_dump/20260912-001001"
 SUBSET = FOLDER / "release-group_candidatos.jsonl"

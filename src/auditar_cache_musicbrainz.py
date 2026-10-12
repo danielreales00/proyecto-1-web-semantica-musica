@@ -7,7 +7,7 @@ from collections import Counter
 from datetime import datetime, timezone
 from unittest.mock import patch
 
-from diagnostico import ROOT
+from musica.comun.rutas import ROOT
 from musicbrainz import Cliente, evaluar, solicitud_grabacion
 
 

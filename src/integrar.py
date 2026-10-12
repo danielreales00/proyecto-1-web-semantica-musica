@@ -8,7 +8,8 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 from descargar import FUENTES
-from diagnostico import ROOT, escribir_csv
+from musica.comun.archivos_csv import escribir_csv
+from musica.comun.rutas import ROOT
 
 OUT = ROOT / "output/csv"
 

@@ -8,7 +8,7 @@ from datetime import datetime, timezone
 
 import requests
 
-from diagnostico import ROOT
+from musica.comun.rutas import ROOT
 
 BASE = "https://data.metabrainz.org/pub/musicbrainz/acousticbrainz/dumps/acousticbrainz-lowlevel-features-20220623/"
 FOLDER = ROOT / "data/raw/acousticbrainz_dump/20220623"

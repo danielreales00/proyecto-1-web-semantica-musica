@@ -4,7 +4,8 @@ import json
 from collections import Counter
 
 from auditar_cache_musicbrainz import evidencia
-from diagnostico import ROOT, normalizar
+from musica.comun.normalizacion import normalizar
+from musica.comun.rutas import ROOT
 from musicbrainz import Cliente, exportar, solicitud_artista
 
 

@@ -4,8 +4,9 @@ import json
 from collections import defaultdict
 
 from ampliar_albumes import read
-from diagnostico import ROOT, normalizar
 from extraer_musicbrainz_completo import load_json
+from musica.comun.normalizacion import normalizar
+from musica.comun.rutas import ROOT
 
 
 def validar_entidades(csv, check):

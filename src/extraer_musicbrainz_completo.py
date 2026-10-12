@@ -11,7 +11,8 @@ import time
 from collections import Counter, defaultdict
 
 from ampliar_albumes import read, sha
-from diagnostico import ROOT, normalizar
+from musica.comun.normalizacion import normalizar
+from musica.comun.rutas import ROOT
 
 FOLDER = ROOT / "data/raw/musicbrainz_completo/20260916-002105"
 ARCHIVE = FOLDER / "mbdump.tar.bz2"

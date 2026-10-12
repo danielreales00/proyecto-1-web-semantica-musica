@@ -4,7 +4,7 @@ import hashlib
 import json
 from pathlib import Path
 
-from diagnostico import ROOT
+from musica.comun.rutas import ROOT
 
 BASE = [
     "grupo_2.csv",

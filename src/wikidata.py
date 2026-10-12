@@ -8,7 +8,8 @@ import os
 import time
 from collections import defaultdict
 
-from diagnostico import ROOT, escribir_csv
+from musica.comun.archivos_csv import escribir_csv
+from musica.comun.rutas import ROOT
 
 PROPIEDADES = {
     "P31": "instancia_de",

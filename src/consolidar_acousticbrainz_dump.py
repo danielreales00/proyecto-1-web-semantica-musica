@@ -6,8 +6,9 @@ from collections import Counter
 from decimal import Decimal
 
 from descargar_acousticbrainz_dump import KINDS, sha
-from diagnostico import ROOT, escribir_csv
 from extraer_acousticbrainz_dump import EXPECTED, OUT
+from musica.comun.archivos_csv import escribir_csv
+from musica.comun.rutas import ROOT
 
 
 def read(path):

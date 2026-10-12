@@ -12,7 +12,8 @@ from urllib.parse import unquote
 
 import requests
 
-from diagnostico import ROOT, escribir_csv
+from musica.comun.archivos_csv import escribir_csv
+from musica.comun.rutas import ROOT
 
 D = "http://dbpedia.org/ontology/"
 TYPE = "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"

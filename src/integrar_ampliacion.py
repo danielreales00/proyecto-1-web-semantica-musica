@@ -5,7 +5,8 @@ import shutil
 from collections import Counter
 
 from ampliar_albumes import read
-from diagnostico import ROOT, escribir_csv
+from musica.comun.archivos_csv import escribir_csv
+from musica.comun.rutas import ROOT
 
 NEW = [
     "wikidata_hechos",

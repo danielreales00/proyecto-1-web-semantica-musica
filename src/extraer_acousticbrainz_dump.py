@@ -8,7 +8,7 @@ import tarfile
 from datetime import datetime, timezone
 
 from descargar_acousticbrainz_dump import FOLDER, KINDS, sha
-from diagnostico import ROOT
+from musica.comun.rutas import ROOT
 
 OUT = FOLDER / "subconjunto"
 EXPECTED = 29_460_584
