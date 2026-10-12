@@ -1,5 +1,7 @@
 # Proyecto de Web Semántica · Etapa 1
 
+La documentación de la segunda entrega está en [README_ETAPA_2.md](README_ETAPA_2.md), con el modelo revisado, los mapeos de datos y las ocho preguntas de competencia. Este documento conserva las instrucciones de la primera entrega.
+
 Entrega del grupo 2. Se conservan las 100.000 canciones y sus valores originales. El enriquecimiento incorpora datos de jMIR, tagtraum, Wikidata, MusicBrainz y AcousticBrainz. La unión de las fuentes aporta información a 99.990 canciones.
 
 ## Archivos para entregar
