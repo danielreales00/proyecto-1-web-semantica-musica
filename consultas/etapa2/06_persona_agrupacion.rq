@@ -1,0 +1,10 @@
+PREFIX mus: <https://example.org/musica/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?grabacion ?captura ?persona ?agrupacion WHERE {
+  ?grabacion a mus:Grabacion ; mus:tieneCredito ?c1, ?c2 .
+  ?c1 mus:artistaAcreditado ?persona ; mus:respaldadoPor ?captura .
+  ?c2 mus:artistaAcreditado ?agrupacion ; mus:respaldadoPor ?captura .
+  ?persona a mus:Persona . ?agrupacion a mus:Agrupacion .
+  FILTER(?persona != ?agrupacion)
+} ORDER BY ?grabacion ?captura ?persona ?agrupacion

@@ -1,0 +1,42 @@
+{
+  "razonador": "HermiT incluido en Owlready2 0.49",
+  "alcance": "esquema completo y casos controlados; no la totalidad de instances.ttl",
+  "esquema_consistente": true,
+  "clases_insatisfacibles": [],
+  "inferencias_verificadas": [
+    [
+      "urn:prueba:edicion",
+      "https://example.org/musica/publicadoPor",
+      "urn:prueba:sello"
+    ],
+    [
+      "urn:prueba:edicion",
+      "https://example.org/musica/contieneGrabacion",
+      "urn:prueba:grabacion"
+    ],
+    [
+      "urn:prueba:obra",
+      "https://example.org/musica/tieneGrabacion",
+      "urn:prueba:grabacion"
+    ],
+    [
+      "urn:prueba:grupo",
+      "https://example.org/musica/tieneLanzamiento",
+      "urn:prueba:edicion"
+    ],
+    [
+      "urn:prueba:credito",
+      "https://example.org/musica/acreditaEntidad",
+      "urn:prueba:grabacion"
+    ],
+    [
+      "urn:prueba:artista",
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "https://example.org/musica/Artista"
+    ]
+  ],
+  "inconsistencias_detectadas": [
+    "disjuncion",
+    "cardinalidad_con_individuos_distintos"
+  ]
+}

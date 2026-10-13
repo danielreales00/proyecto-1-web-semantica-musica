@@ -12,6 +12,8 @@ El diseño distingue composiciones, grabaciones, ediciones y grupos de lanzamien
 - [Catálogo de la ontología](docs/etapa2/catalogo_ontologia.md): clases, propiedades, dominios, rangos y once axiomas justificados.
 - [Decisiones de modelado](docs/etapa2/decisiones_modelado.md): eliminación de afirmaciones genéricas, distinción de ediciones y grupos, y cobertura de labels.
 - [Generación y Fuseki](docs/etapa2/generacion_instancias.md): transformación de CSV, validación, carga y servicio Docker.
+- [Consultas y resultados](docs/etapa2/consultas.md): interpretación, conteos y revisión con HermiT.
+- [Informe académico](latex/informe_etapa2.tex): fuente LaTeX de la segunda entrega.
 - [Etapa 1](README.md): datos de origen y comandos de reproducción disponibles.
 
 Estos documentos complementan el informe académico en LaTeX. La documentación de uso y las definiciones del modelo permanecen en Markdown para su consulta en GitHub.
@@ -42,8 +44,27 @@ docker compose up -d --build
 python src/cargar_fuseki.py
 ```
 
-La salida está en `output/etapa2`. Las consultas de competencia, la revisión con un razonador OWL y el informe académico siguen pendientes. La documentación de generación explica el alcance de los datos proyectados y la configuración de Fuseki.
+La salida está en `output/etapa2`. Las ocho consultas están implementadas y sus resultados completos se guardan en CSV y JSON:
+
+```bash
+python src/consultar_etapa2.py
+python -m pip install -r requirements-owl.txt
+python src/verificar_owl.py --docker-java
+```
+
+HermiT verifica el esquema y casos controlados, no la totalidad de las instancias. Los controles sobre todos los datos se ejecutan con `validar_instancias.py`. La documentación de generación explica el alcance de los datos proyectados y la configuración de Fuseki.
 
 ## Archivos de la segunda entrega
 
 La entrega incluirá ontology.ttl con clases, propiedades y axiomas; instances.ttl con instancias generadas; configuracion.py con parámetros de Fuseki; consultas SPARQL y sus resultados; evidencia de carga y ejecución; y un informe de máximo seis páginas. Se requieren al menos ocho axiomas OWL de tres tipos de construcción y al menos cinco preguntas implementadas de las ocho definidas.
+
+## Informe y paquete de entrega
+
+El informe editable está en `latex/informe_etapa2.tex`; su PDF está en `output/pdf/informe_etapa2.pdf` y tiene como máximo seis páginas. Puede compilarse con Tectonic:
+
+```bash
+tectonic --outdir output/pdf latex/informe_etapa2.tex
+python src/empaquetar_etapa2.py
+```
+
+El paquete `output/entrega_etapa2.zip` incluye código, los 39 CSV de entrada, esquema, instancias, consultas, resultados y evidencia. Descomprimirlo antes de ejecutar los comandos. El archivo `MANIFIESTO_ETAPA2.json` permite verificar su integridad. Los datos voluminosos se distribuyen en el paquete, sin añadirse al historial Git.
