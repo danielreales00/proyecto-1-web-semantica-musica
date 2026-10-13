@@ -9,8 +9,9 @@ El diseño distingue composiciones, grabaciones, ediciones y grupos de lanzamien
 - [Modelo musical](docs/etapa2/modelo.md): entidades, relaciones, identidad y conocimiento incompleto.
 - [Mapeo de datos](docs/etapa2/mapeo_datos.md): significado de las transformaciones desde los CSV consolidados.
 - [Preguntas de competencia](docs/etapa2/preguntas_competencia.md): las ocho preguntas acordadas.
-- [Catálogo de la ontología](docs/etapa2/catalogo_ontologia.md): clases, propiedades, dominios, rangos y diez axiomas justificados.
+- [Catálogo de la ontología](docs/etapa2/catalogo_ontologia.md): clases, propiedades, dominios, rangos y once axiomas justificados.
 - [Decisiones de modelado](docs/etapa2/decisiones_modelado.md): eliminación de afirmaciones genéricas, distinción de ediciones y grupos, y cobertura de labels.
+- [Generación y Fuseki](docs/etapa2/generacion_instancias.md): transformación de CSV, validación, carga y servicio Docker.
 - [Etapa 1](README.md): datos de origen y comandos de reproducción disponibles.
 
 Estos documentos complementan el informe académico en LaTeX. La documentación de uso y las definiciones del modelo permanecen en Markdown para su consulta en GitHub.
@@ -30,9 +31,18 @@ python src/generar_ontologia.py
 
 El comando genera `ontology.ttl` y actualiza el catálogo Markdown. Antes de escribir, exige etiquetas no vacías con idioma BCP 47 para todos los recursos del esquema. La salida informa cobertura e idiomas. Acepta `--salida` y `--catalogo` para elegir otras rutas. El Turtle se ordena de forma determinista para facilitar su revisión en Git.
 
-Las pruebas se ejecutan con `python -m unittest discover -s tests`. Comprueban el esquema con RDFLib y PyOxigraph, las uniones de clases, los diez axiomas y la validación de etiquetas, incluidos objetos externos y nodos anónimos de dominio. No constituyen una prueba de consistencia con un razonador OWL.
+Las pruebas se ejecutan con `python -m unittest discover -s tests`. Comprueban el esquema con RDFLib y PyOxigraph, las uniones de clases, los axiomas y la validación de etiquetas, incluidos objetos externos y nodos anónimos de dominio. No constituyen una prueba de consistencia con un razonador OWL.
 
-La generación de `instances.ttl`, las consultas y la ejecución en Fuseki siguen pendientes. El validador de etiquetas ya admite un grafo combinado de esquema e instancias; su integración en la transformación de los CSV será el siguiente paso.
+La generación de instancias, la validación del RDF exportado y el servicio Docker están implementados:
+
+```bash
+python src/generar_instancias.py
+python src/validar_instancias.py
+docker compose up -d --build
+python src/cargar_fuseki.py
+```
+
+La salida está en `output/etapa2`. Las consultas de competencia, la revisión con un razonador OWL y el informe académico siguen pendientes. La documentación de generación explica el alcance de los datos proyectados y la configuración de Fuseki.
 
 ## Archivos de la segunda entrega
 

@@ -98,10 +98,16 @@ Un dominio con «o» es una unión OWL. Dominio y rango permiten inferir tipos; 
 | desviacionFraccionVentanasBajaEnergia | Dato | AnalisisAcustico | decimal | Estadístico jMIR del fragmento: Fraction_Of_Low_Energy_Windows_Overall_Standard_Deviation_1. |
 | mediaCrucesPorCero | Dato | AnalisisAcustico | decimal | Estadístico jMIR del fragmento: Zero_Crossings_Overall_Average_1. |
 | desviacionCrucesPorCero | Dato | AnalisisAcustico | decimal | Estadístico jMIR del fragmento: Zero_Crossings_Overall_Standard_Deviation_1. |
+| artistaSuministrado | Objeto | Grabacion | Artista | Artista reportado en la entrada; no certifica el crédito completo ni su orden. |
+| lanzamientoSuministrado | Dato | Grabacion | string | Texto original del lanzamiento; no establece identidad de una edición. |
+| duracionSuministradaSegundos | Dato | Grabacion | decimal | Duración reportada por la entrada original, expresada en segundos. |
+| isrc | Dato | Grabacion | string | Identificador ISRC reportado; no es una clave OWL. |
+| archivoCaptura | Dato | CapturaFuente | string | Ruta relativa de la tabla consolidada en output/csv. |
+| sha256Captura | Dato | CapturaFuente | string | Huella del CSV que permite recuperar la evidencia exacta y sus metadatos de origen. |
 
 ## Axiomas OWL
 
-Diez axiomas de tres tipos de construcción, además de las jerarquías y las uniones usadas en dominios y rangos.
+Once axiomas de cuatro tipos de construcción, además de las jerarquías y las uniones usadas en dominios y rangos.
 
 | ID | Construcción | Términos | Justificación |
 | --- | --- | --- | --- |
@@ -115,11 +121,12 @@ Diez axiomas de tres tipos de construcción, además de las jerarquías y las un
 | A08 | cardinalidad | CreditoArtistico, artistaAcreditado | Cada crédito individual identifica exactamente un artista de clase Artista. |
 | A09 | cardinalidad | CreditoArtistico, acreditaEntidad | Cada crédito pertenece exactamente a una entidad de la unión Grabacion o GrupoLanzamientos. |
 | A10 | cardinalidad | AsignacionGenero, generoAsignado | Cada asignación individual identifica exactamente un GeneroMusical. |
+| A11 | cadena de propiedades | tienePublicacion, selloPublicacion → publicadoPor | El sello de una asociación editorial publica su lanzamiento. |
 
 ## Interpretación y validación
 
 Las cardinalidades son calificadas y exactas (1). Con mundo abierto, un valor ausente no prueba una inconsistencia; dos URI tampoco prueban dos individuos diferentes. No se declaran claves, propiedades inversamente funcionales ni diferencias entre individuos por sus identificadores locales.
 
-La validación de etiquetas es una comprobación explícita sobre la unión de esquema e instancias: exige texto no vacío e idioma BCP 47 en todas las etiquetas. Acepta `und` cuando el idioma es desconocido. Los nodos estructurales OWL y las celdas de listas RDF quedan exentos; los nodos anónimos de dominio no.
+La validación de etiquetas es una comprobación explícita sobre la unión de esquema e instancias: exige texto no vacío y un código de idioma válido en todas las etiquetas, como `es` para español o `en` para inglés. Acepta `und` cuando el idioma es desconocido. Los nodos estructurales OWL y las celdas de listas RDF quedan exentos. Los nodos anónimos de dominio no.
 
-La generación y las pruebas estructurales no ejecutan un razonador OWL. Las consultas deberán declarar si usan triples explícitos o inferencias materializadas. Contar URI distintas no prueba que representen individuos diferentes en el mundo.
+La generación y las pruebas estructurales no ejecutan un razonador OWL.

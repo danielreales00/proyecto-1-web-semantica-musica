@@ -1,0 +1,230 @@
+{
+  "recursos": 742915,
+  "etiquetas_por_idioma": {
+    "es": 486751,
+    "und": 274056,
+    "en": 197
+  },
+  "etiquetas_generadas": 485770,
+  "por_clase": {
+    "CapturaFuente": 39,
+    "Grabacion": 100000,
+    "Fuente": 9,
+    "Artista": 48592,
+    "Correspondencia": 101000,
+    "Agrupacion": 13842,
+    "Persona": 32031,
+    "ObraMusical": 10003,
+    "GrupoLanzamientos": 33277,
+    "Album": 27053,
+    "Sencillo": 2020,
+    "EP": 1199,
+    "Lanzamiento": 57373,
+    "SelloDiscografico": 8699,
+    "CreditoArtistico": 65032,
+    "PublicacionDiscografica": 61502,
+    "GeneroMusical": 1968,
+    "AsignacionGenero": 137218,
+    "AnalisisAcustico": 118203
+  },
+  "triples_escritos": 8128035,
+  "entradas": {
+    "acousticbrainz.csv": {
+      "sha256": "858907bdfeed847691fd061b46bd0b04e13124997e57269c55bf34da018ac570",
+      "proyeccion": "leída por el generador; alcance documentado"
+    },
+    "acousticbrainz_correspondencias_masivas.csv": {
+      "sha256": "0051467eb3034ea68e19b84ed0cf8878fe48af61ed8fa271fa259451b0e2d196",
+      "proyeccion": "evidencia conservada en CSV"
+    },
+    "acousticbrainz_masivo.csv": {
+      "sha256": "58e08ca0a747f674b1972be0765f1d5b4434f7c4c877fb9c82568b61e29f0229",
+      "proyeccion": "leída por el generador; alcance documentado"
+    },
+    "artistas.csv": {
+      "sha256": "cf5030540271a15f833d0c11e0b9ab14c811d9c30e139420cf5d38503a1891aa",
+      "proyeccion": "leída por el generador; alcance documentado"
+    },
+    "artistas_masivos.csv": {
+      "sha256": "a6cea051c369405482576c8c2dbe340fb40828b9f437b5d0a566b12e84db5558",
+      "proyeccion": "leída por el generador; alcance documentado"
+    },
+    "cancion_genero.csv": {
+      "sha256": "18c557d1eae34fe6bb297b20e931f4194ee064e0b481a4c8c0917a33feeb904e",
+      "proyeccion": "leída por el generador; alcance documentado"
+    },
+    "canciones.csv": {
+      "sha256": "65bb278542209e489ced3f36407c8dd00fd0c3a7b6dec6729b7da3f0b906be53",
+      "proyeccion": "leída por el generador; alcance documentado"
+    },
+    "creditos_grabacion.csv": {
+      "sha256": "9031f7363a4324f334194c7c009e5be57179137c559dd0b8720357535cd850ed",
+      "proyeccion": "leída por el generador; alcance documentado"
+    },
+    "creditos_grabaciones_masivos.csv": {
+      "sha256": "229a3da222e5332477fac24cb77e2c9bc73d26bebf814d0aab0d5aad4a99141a",
+      "proyeccion": "leída por el generador; alcance documentado"
+    },
+    "creditos_grupo_lanzamiento.csv": {
+      "sha256": "60da91c90155789b7f771904b935115193edafea0cb014ebd2ddce2b20f208bd",
+      "proyeccion": "leída por el generador; alcance documentado"
+    },
+    "descriptores_acusticos.csv": {
+      "sha256": "a4e3956ae50d22219695fe1c6dc57f8cd92164b8c87c159165bb512624978fde",
+      "proyeccion": "leída por el generador; alcance documentado"
+    },
+    "eventos_lanzamientos_masivos.csv": {
+      "sha256": "7e358d03c4f1b7e976526a2051607e32c0537eb9fe313848023741acc6f5e93a",
+      "proyeccion": "evidencia conservada en CSV"
+    },
+    "fuentes.csv": {
+      "sha256": "a016752235d02cd645005aaf456eadf44be9127306922250ad2e0e86b797654e",
+      "proyeccion": "evidencia conservada en CSV"
+    },
+    "grabacion_lanzamiento.csv": {
+      "sha256": "e5a0fda68e9c6a80308f4a513cddf44e3dad9c253d627ef45cfa7cff374decd8",
+      "proyeccion": "leída por el generador; alcance documentado"
+    },
+    "grabacion_lanzamiento_masivo.csv": {
+      "sha256": "d4277cf056248ab00474a32cb786f2a8770fd551fd3f4d28603957b4dd186bd4",
+      "proyeccion": "leída por el generador; alcance documentado"
+    },
+    "grabaciones.csv": {
+      "sha256": "c139a0eec5005dbe4d09d02b0c632a82086953473863b1da573fd05371392a2d",
+      "proyeccion": "leída por el generador; alcance documentado"
+    },
+    "grabaciones_correspondencias_masivas.csv": {
+      "sha256": "ab755249f43e361b85aa2784299eba08ffbc4af993584f51385aad28aeb17c0f",
+      "proyeccion": "leída por el generador; alcance documentado"
+    },
+    "grabaciones_masivas.csv": {
+      "sha256": "0cf54a4c3922ed66d4d40b7c92d0f966883a69d85ae92ce9bcec427c22c11581",
+      "proyeccion": "leída por el generador; alcance documentado"
+    },
+    "grupo_lanzamiento_candidatos.csv": {
+      "sha256": "28a3f0d78aef3166ebfc9a020ed8f89681b7b962123d9a0eb5754d2024260129",
+      "proyeccion": "evidencia conservada en CSV"
+    },
+    "grupo_lanzamiento_correspondencias.csv": {
+      "sha256": "fa0f09d11c4e5a4ce23cf8d5eeb421ea21241887cab3ec81198dd97ea12acd8e",
+      "proyeccion": "evidencia conservada en CSV"
+    },
+    "grupo_lanzamiento_genero.csv": {
+      "sha256": "899b4b877700608636105af0279617034c5426abfb206a193b3d64f7ab71f1b3",
+      "proyeccion": "leída por el generador; alcance documentado"
+    },
+    "grupos_lanzamientos.csv": {
+      "sha256": "1ef4e57821b39485d7c3d8512a756f17e33de39b186655e2206269bae68e96da",
+      "proyeccion": "leída por el generador; alcance documentado"
+    },
+    "isrc.csv": {
+      "sha256": "f3f28e47a38da7bb6945939d2f7dd18fcd5923bc170fce21603f2adad7527432",
+      "proyeccion": "leída por el generador; alcance documentado"
+    },
+    "isrc_masivos.csv": {
+      "sha256": "c62f775b3fc20cd83aa4c493f8dab9dd1ae7a5cec0ac519a6c67bddc30c6b167",
+      "proyeccion": "leída por el generador; alcance documentado"
+    },
+    "lanzamiento_sello_masivo.csv": {
+      "sha256": "ba5d3e8d0b849818bbc86f96a70a8d995f7501beb941bce00c54297ccb405135",
+      "proyeccion": "leída por el generador; alcance documentado"
+    },
+    "lanzamientos.csv": {
+      "sha256": "9e6164b6d371a4ef0219549332bec6d78d77dde01910515c1df29a1ecf4d4b4d",
+      "proyeccion": "leída por el generador; alcance documentado"
+    },
+    "lanzamientos_masivos.csv": {
+      "sha256": "073ec951f6ed342589841b3d2a1cf97b9d2ac2bdd083d6519b449c473ec04cf0",
+      "proyeccion": "leída por el generador; alcance documentado"
+    },
+    "musicbrainz_artistas.csv": {
+      "sha256": "96efc178d7863f89c8d75dd98fac4fdf27791a8cc126f3e0400326b822e4c2c2",
+      "proyeccion": "evidencia conservada en CSV"
+    },
+    "musicbrainz_candidatos.csv": {
+      "sha256": "25aaab3b4915314d4a8b2b63ab45475a4b8e9f898f06b8c961ec014d0ca91c91",
+      "proyeccion": "evidencia conservada en CSV"
+    },
+    "musicbrainz_correspondencias.csv": {
+      "sha256": "99127c3b1d69a3dc96695069bdabb58a3f2c86da369cb7ee7745089a5d4283f6",
+      "proyeccion": "leída por el generador; alcance documentado"
+    },
+    "obras.csv": {
+      "sha256": "4b0f9ea2d19b79b2b9cdc94b7ba0566e0ec40768cf1dfd87d5eb0fdd1d00a025",
+      "proyeccion": "leída por el generador; alcance documentado"
+    },
+    "obras_masivas.csv": {
+      "sha256": "4d74ae86ff0f182ad9e62e06f98182a5adce3eb44540189ddaeeece2bbb0be8b",
+      "proyeccion": "leída por el generador; alcance documentado"
+    },
+    "relaciones_grupo_lanzamiento.csv": {
+      "sha256": "488afe211a4acf0b67116b2d3ac75ce2c29359f86c7db9187dbf0f02fef7e9f1",
+      "proyeccion": "evidencia conservada en CSV"
+    },
+    "relaciones_musicales_masivas.csv": {
+      "sha256": "91bae35730821bcafb8bca03ab82848c1ac187a5c76614a69743e4b5ddb3310d",
+      "proyeccion": "leída por el generador; alcance documentado"
+    },
+    "relaciones_musicbrainz.csv": {
+      "sha256": "486419d39c065fa7fe2d6ba0295b786404091460e5111b7cf2051e1f15f245d1",
+      "proyeccion": "leída por el generador; alcance documentado"
+    },
+    "sellos_masivos.csv": {
+      "sha256": "213dbad1fd5ca91951f8ad5142b8a461e3d40f9ac9a9b4eac964b223135e27a4",
+      "proyeccion": "leída por el generador; alcance documentado"
+    },
+    "wikidata_correspondencias.csv": {
+      "sha256": "2a951c4eac5ae004f3fe03a619894644595e225fae8e937f818d783b27946da0",
+      "proyeccion": "evidencia conservada en CSV"
+    },
+    "wikidata_entidades.csv": {
+      "sha256": "e713b81d583eba45a97c9a7ea53f47e379f22a19e31203bdae683c86931a7564",
+      "proyeccion": "evidencia conservada en CSV"
+    },
+    "wikidata_hechos.csv": {
+      "sha256": "b00ec7a29f56da808405ca30992244f793d19502503d525388d4b02f0695b28b",
+      "proyeccion": "leída por el generador; alcance documentado"
+    }
+  },
+  "filas_leidas": {
+    "canciones": 100000,
+    "grabaciones_correspondencias_masivas": 100000,
+    "musicbrainz_correspondencias": 1000,
+    "artistas_masivos": 47145,
+    "artistas": 48592,
+    "obras_masivas": 9878,
+    "obras": 139,
+    "grupos_lanzamientos": 30503,
+    "lanzamientos_masivos": 57333,
+    "lanzamientos": 133,
+    "sellos_masivos": 8699,
+    "grabaciones_masivas": 32140,
+    "grabaciones": 313,
+    "isrc_masivos": 12409,
+    "isrc": 12,
+    "creditos_grabaciones_masivos": 33439,
+    "creditos_grabacion": 54,
+    "creditos_grupo_lanzamiento": 31500,
+    "grabacion_lanzamiento_masivo": 79959,
+    "grabacion_lanzamiento": 133,
+    "lanzamiento_sello_masivo": 61502,
+    "relaciones_musicales_masivas": 79223,
+    "relaciones_musicbrainz": 228,
+    "cancion_genero": 38728,
+    "grupo_lanzamiento_genero": 70420,
+    "wikidata_hechos": 110668,
+    "descriptores_acusticos": 99465,
+    "acousticbrainz_masivo": 18560,
+    "acousticbrainz": 178
+  },
+  "filas_sin_proyeccion_musical": {
+    "relaciones_musicales_masivas": 52956,
+    "relaciones_musicbrainz": 193,
+    "wikidata_hechos": 82598
+  },
+  "referencias_locales": 100000,
+  "referencias_reconciliadas": 32175,
+  "mbid_seleccionados_distintos": 32140,
+  "conflictos_correspondencia": [],
+  "sha256_instances": "6f445c5dc681857667f7d6b0973cc1b3fc7dbe6a1e181763d76656bc7c2f1727"
+}

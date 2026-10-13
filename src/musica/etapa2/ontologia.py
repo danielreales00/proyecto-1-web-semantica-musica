@@ -111,6 +111,12 @@ def anotar(grafo, recurso, etiqueta, descripcion):
 
 
 def agregar_axiomas(grafo):
+    primero, segundo = BNode("cadenaPublicacion0"), BNode("cadenaPublicacion1")
+    grafo.add((MUS.publicadoPor, OWL.propertyChainAxiom, primero))
+    grafo.add((primero, RDF.first, MUS.tienePublicacion))
+    grafo.add((primero, RDF.rest, segundo))
+    grafo.add((segundo, RDF.first, MUS.selloPublicacion))
+    grafo.add((segundo, RDF.rest, RDF.nil))
     for identificador, tipo, sujeto, objeto, _ in AXIOMAS:
         if tipo == "disjunción":
             grafo.add((MUS[sujeto], OWL.disjointWith, MUS[objeto]))
@@ -228,13 +234,16 @@ def catalogo_markdown():
             "",
             "## Axiomas OWL",
             "",
-            "Diez axiomas de tres tipos de construcción, además de las jerarquías y las uniones usadas en dominios y rangos.",
+            "Once axiomas de cuatro tipos de construcción, además de las jerarquías y las uniones usadas en dominios y rangos.",
             "",
             "| ID | Construcción | Términos | Justificación |",
             "| --- | --- | --- | --- |",
         ]
     )
     lineas.extend(f"| {i} | {t} | {s}, {o} | {j} |" for i, t, s, o, j in AXIOMAS)
+    lineas.append(
+        "| A11 | cadena de propiedades | tienePublicacion, selloPublicacion → publicadoPor | El sello de una asociación editorial publica su lanzamiento. |"
+    )
     lineas.extend(
         [
             "",
@@ -242,9 +251,9 @@ def catalogo_markdown():
             "",
             "Las cardinalidades son calificadas y exactas (1). Con mundo abierto, un valor ausente no prueba una inconsistencia; dos URI tampoco prueban dos individuos diferentes. No se declaran claves, propiedades inversamente funcionales ni diferencias entre individuos por sus identificadores locales.",
             "",
-            "La validación de etiquetas es una comprobación explícita sobre la unión de esquema e instancias: exige texto no vacío e idioma BCP 47 en todas las etiquetas. Acepta `und` cuando el idioma es desconocido. Los nodos estructurales OWL y las celdas de listas RDF quedan exentos; los nodos anónimos de dominio no.",
+            "La validación de etiquetas es una comprobación explícita sobre la unión de esquema e instancias: exige texto no vacío y un código de idioma válido en todas las etiquetas, como `es` para español o `en` para inglés. Acepta `und` cuando el idioma es desconocido. Los nodos estructurales OWL y las celdas de listas RDF quedan exentos. Los nodos anónimos de dominio no.",
             "",
-            "La generación y las pruebas estructurales no ejecutan un razonador OWL. Las consultas deberán declarar si usan triples explícitos o inferencias materializadas. Contar URI distintas no prueba que representen individuos diferentes en el mundo.",
+            "La generación y las pruebas estructurales no ejecutan un razonador OWL.",
             "",
         ]
     )

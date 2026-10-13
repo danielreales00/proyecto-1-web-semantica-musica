@@ -16,6 +16,10 @@ _:A10 owl:onClass mus:GeneroMusical .
 _:A10 owl:onProperty mus:generoAsignado .
 _:A10 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger .
 _:A10 rdf:type owl:Restriction .
+_:cadenaPublicacion0 rdf:first mus:tienePublicacion .
+_:cadenaPublicacion0 rdf:rest _:cadenaPublicacion1 .
+_:cadenaPublicacion1 rdf:first mus:selloPublicacion .
+_:cadenaPublicacion1 rdf:rest rdf:nil .
 _:union_Grabacion_Artista_GrupoLanzamientos owl:unionOf _:union_Grabacion_Artista_GrupoLanzamientos_0 .
 _:union_Grabacion_Artista_GrupoLanzamientos rdf:type owl:Class .
 _:union_Grabacion_Artista_GrupoLanzamientos_0 rdf:first mus:Grabacion .
@@ -127,11 +131,21 @@ mus:apareceEn rdfs:comment "Edición que contiene la grabación."@es .
 mus:apareceEn rdfs:domain mus:Grabacion .
 mus:apareceEn rdfs:label "aparece en"@es .
 mus:apareceEn rdfs:range mus:Lanzamiento .
+mus:archivoCaptura rdf:type owl:DatatypeProperty .
+mus:archivoCaptura rdfs:comment "Ruta relativa de la tabla consolidada en output/csv."@es .
+mus:archivoCaptura rdfs:domain mus:CapturaFuente .
+mus:archivoCaptura rdfs:label "archivo de captura"@es .
+mus:archivoCaptura rdfs:range xsd:string .
 mus:artistaAcreditado rdf:type owl:ObjectProperty .
 mus:artistaAcreditado rdfs:comment "Artista del crédito; no implica composición ni producción."@es .
 mus:artistaAcreditado rdfs:domain mus:CreditoArtistico .
 mus:artistaAcreditado rdfs:label "artista acreditado"@es .
 mus:artistaAcreditado rdfs:range mus:Artista .
+mus:artistaSuministrado rdf:type owl:ObjectProperty .
+mus:artistaSuministrado rdfs:comment "Artista reportado en la entrada; no certifica el crédito completo ni su orden."@es .
+mus:artistaSuministrado rdfs:domain mus:Grabacion .
+mus:artistaSuministrado rdfs:label "artista suministrado"@es .
+mus:artistaSuministrado rdfs:range mus:Artista .
 mus:bailabilidad rdf:type owl:DatatypeProperty .
 mus:bailabilidad rdfs:comment "Valor de AcousticBrainz: danceability; se conserva por análisis."@es .
 mus:bailabilidad rdfs:domain mus:AnalisisAcustico .
@@ -202,6 +216,11 @@ mus:desviacionVariabilidadEspectral rdfs:comment "Estadístico jMIR del fragment
 mus:desviacionVariabilidadEspectral rdfs:domain mus:AnalisisAcustico .
 mus:desviacionVariabilidadEspectral rdfs:label "desviación estándar de variabilidad espectral"@es .
 mus:desviacionVariabilidadEspectral rdfs:range xsd:decimal .
+mus:duracionSuministradaSegundos rdf:type owl:DatatypeProperty .
+mus:duracionSuministradaSegundos rdfs:comment "Duración reportada por la entrada original, expresada en segundos."@es .
+mus:duracionSuministradaSegundos rdfs:domain mus:Grabacion .
+mus:duracionSuministradaSegundos rdfs:label "duración suministrada en segundos"@es .
+mus:duracionSuministradaSegundos rdfs:range xsd:decimal .
 mus:estadoCorrespondencia rdf:type owl:DatatypeProperty .
 mus:estadoCorrespondencia rdfs:comment "Estado original: aceptada, ambigua o sin coincidencia conservadora."@es .
 mus:estadoCorrespondencia rdfs:domain mus:Correspondencia .
@@ -243,6 +262,16 @@ mus:interpretaObra rdfs:comment "Obra realizada por una grabación."@es .
 mus:interpretaObra rdfs:domain mus:Grabacion .
 mus:interpretaObra rdfs:label "interpreta obra"@es .
 mus:interpretaObra rdfs:range mus:ObraMusical .
+mus:isrc rdf:type owl:DatatypeProperty .
+mus:isrc rdfs:comment "Identificador ISRC reportado; no es una clave OWL."@es .
+mus:isrc rdfs:domain mus:Grabacion .
+mus:isrc rdfs:label "ISRC"@es .
+mus:isrc rdfs:range xsd:string .
+mus:lanzamientoSuministrado rdf:type owl:DatatypeProperty .
+mus:lanzamientoSuministrado rdfs:comment "Texto original del lanzamiento; no establece identidad de una edición."@es .
+mus:lanzamientoSuministrado rdfs:domain mus:Grabacion .
+mus:lanzamientoSuministrado rdfs:label "lanzamiento suministrado"@es .
+mus:lanzamientoSuministrado rdfs:range xsd:string .
 mus:mbid rdf:type owl:DatatypeProperty .
 mus:mbid rdfs:comment "Identificador MusicBrainz respaldado por la fuente."@es .
 mus:mbid rdfs:domain owl:Thing .
@@ -354,6 +383,7 @@ mus:produjo rdfs:comment "Producción respaldada explícitamente por la fuente."
 mus:produjo rdfs:domain mus:Artista .
 mus:produjo rdfs:label "produjo"@es .
 mus:produjo rdfs:range mus:Grabacion .
+mus:publicadoPor owl:propertyChainAxiom _:cadenaPublicacion0 .
 mus:publicadoPor rdf:type owl:ObjectProperty .
 mus:publicadoPor rdfs:comment "Sello que publica una edición; el catálogo se conserva en la asociación."@es .
 mus:publicadoPor rdfs:domain mus:Lanzamiento .
@@ -369,6 +399,11 @@ mus:selloPublicacion rdfs:comment "Sello correspondiente a esta asociación edit
 mus:selloPublicacion rdfs:domain mus:PublicacionDiscografica .
 mus:selloPublicacion rdfs:label "sello de publicación"@es .
 mus:selloPublicacion rdfs:range mus:SelloDiscografico .
+mus:sha256Captura rdf:type owl:DatatypeProperty .
+mus:sha256Captura rdfs:comment "Huella del CSV que permite recuperar la evidencia exacta y sus metadatos de origen."@es .
+mus:sha256Captura rdfs:domain mus:CapturaFuente .
+mus:sha256Captura rdfs:label "SHA-256 de captura"@es .
+mus:sha256Captura rdfs:range xsd:string .
 mus:sonoridadMedia rdf:type owl:DatatypeProperty .
 mus:sonoridadMedia rdfs:comment "Valor de AcousticBrainz: average_loudness; se conserva por análisis."@es .
 mus:sonoridadMedia rdfs:domain mus:AnalisisAcustico .

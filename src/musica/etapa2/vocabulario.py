@@ -462,4 +462,48 @@ DESCRIPTORES = tuple(
         ("desviacion", "desviación estándar", "Overall_Standard_Deviation"),
     )
 )
-PROPIEDADES = OBJETO + DATOS + DESCRIPTORES
+EVIDENCIA = (
+    Propiedad(
+        "artistaSuministrado",
+        "artista suministrado",
+        ("Grabacion",),
+        "Artista",
+        "Artista reportado en la entrada; no certifica el crédito completo ni su orden.",
+    ),
+    dato(
+        "lanzamientoSuministrado",
+        "lanzamiento suministrado",
+        ("Grabacion",),
+        "string",
+        "Texto original del lanzamiento; no establece identidad de una edición.",
+    ),
+    dato(
+        "duracionSuministradaSegundos",
+        "duración suministrada en segundos",
+        ("Grabacion",),
+        "decimal",
+        "Duración reportada por la entrada original, expresada en segundos.",
+    ),
+    dato(
+        "isrc",
+        "ISRC",
+        ("Grabacion",),
+        "string",
+        "Identificador ISRC reportado; no es una clave OWL.",
+    ),
+    dato(
+        "archivoCaptura",
+        "archivo de captura",
+        ("CapturaFuente",),
+        "string",
+        "Ruta relativa de la tabla consolidada en output/csv.",
+    ),
+    dato(
+        "sha256Captura",
+        "SHA-256 de captura",
+        ("CapturaFuente",),
+        "string",
+        "Huella del CSV que permite recuperar la evidencia exacta y sus metadatos de origen.",
+    ),
+)
+PROPIEDADES = OBJETO + DATOS + DESCRIPTORES + EVIDENCIA

@@ -1,0 +1,17 @@
+{
+  "triples_distintos_esquema_e_instancias": 7607114,
+  "controles": {
+    "recursos_sin_etiqueta": "correcto",
+    "etiquetas_vacias_o_sin_idioma": "correcto",
+    "propiedades_no_declaradas": "correcto",
+    "creditos_incompletos_o_ambiguos": "correcto",
+    "asignaciones_sin_genero_unico": "correcto",
+    "tipos_disjuntos_explicitos": "correcto",
+    "publicaciones_sin_relacion_directa": "correcto"
+  },
+  "etiquetas_por_idioma": {
+    "und": 274056,
+    "en": 197,
+    "es": 486841
+  }
+}
