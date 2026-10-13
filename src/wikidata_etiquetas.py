@@ -6,7 +6,8 @@ import hashlib
 import json
 import os
 
-from diagnostico import ROOT, escribir_csv
+from musica.comun.archivos_csv import escribir_csv
+from musica.comun.rutas import ROOT
 from musicbrainz import Cliente
 
 

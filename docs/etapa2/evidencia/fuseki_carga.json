@@ -1,0 +1,71 @@
+{
+  "fecha_utc": "2026-10-13T01:39:39.646055+00:00",
+  "query_url": "http://localhost:3030/musica/query",
+  "data_url": "http://localhost:3030/musica/data",
+  "cargas": [
+    {
+      "archivo": "ontology.ttl",
+      "grafo": "urn:musica:ontologia",
+      "sha256": "5d558513b093c521d135d43407f817652900708b8b56ffea0c277ac0efdfe284",
+      "http": 201
+    },
+    {
+      "archivo": "instances.ttl",
+      "grafo": "urn:musica:instancias",
+      "sha256": "6f445c5dc681857667f7d6b0973cc1b3fc7dbe6a1e181763d76656bc7c2f1727",
+      "http": 201
+    }
+  ],
+  "triples_por_grafo": {
+    "head": {
+      "vars": [
+        "grafo",
+        "triples"
+      ]
+    },
+    "results": {
+      "bindings": [
+        {
+          "grafo": {
+            "type": "uri",
+            "value": "urn:musica:instancias"
+          },
+          "triples": {
+            "type": "literal",
+            "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+            "value": "7606648"
+          }
+        },
+        {
+          "grafo": {
+            "type": "uri",
+            "value": "urn:musica:ontologia"
+          },
+          "triples": {
+            "type": "literal",
+            "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+            "value": "466"
+          }
+        }
+      ]
+    }
+  },
+  "grabaciones": {
+    "head": {
+      "vars": [
+        "total"
+      ]
+    },
+    "results": {
+      "bindings": [
+        {
+          "total": {
+            "type": "literal",
+            "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+            "value": "100000"
+          }
+        }
+      ]
+    }
+  }
+}

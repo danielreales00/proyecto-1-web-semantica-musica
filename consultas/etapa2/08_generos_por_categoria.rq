@@ -1,0 +1,15 @@
+PREFIX mus: <https://example.org/musica/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?genero (COALESCE(?ng, 0) AS ?grabaciones) (COALESCE(?na, 0) AS ?artistas) (COALESCE(?nl, 0) AS ?grupos) WHERE {
+  ?genero a mus:GeneroMusical .
+  OPTIONAL { SELECT ?genero (COUNT(DISTINCT ?g) AS ?ng) WHERE {
+    ?g a mus:Grabacion ; mus:tieneAsignacionGenero/mus:generoAsignado ?genero .
+  } GROUP BY ?genero }
+  OPTIONAL { SELECT ?genero (COUNT(DISTINCT ?a) AS ?na) WHERE {
+    ?a a mus:Artista ; mus:tieneAsignacionGenero/mus:generoAsignado ?genero .
+  } GROUP BY ?genero }
+  OPTIONAL { SELECT ?genero (COUNT(DISTINCT ?l) AS ?nl) WHERE {
+    ?l a mus:GrupoLanzamientos ; mus:tieneAsignacionGenero/mus:generoAsignado ?genero .
+  } GROUP BY ?genero }
+} ORDER BY ?genero

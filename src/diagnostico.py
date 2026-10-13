@@ -4,30 +4,15 @@ import csv
 import hashlib
 import json
 import math
-import os
 import random
 import re
-import unicodedata
 from collections import Counter, defaultdict
-from pathlib import Path
 
-ROOT = Path(
-    os.environ.get("PROYECTO_ROOT", Path(__file__).resolve().parents[1])
-).resolve()
+from musica.comun.archivos_csv import escribir_csv
+from musica.comun.normalizacion import normalizar
+from musica.comun.rutas import ROOT
+
 MBID = re.compile(r"^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$")
-
-
-def normalizar(s):
-    return " ".join(unicodedata.normalize("NFKC", s).casefold().split())
-
-
-def escribir_csv(path, rows, fields=None):
-    path = Path(path)
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("w", newline="", encoding="utf-8") as f:
-        w = csv.DictWriter(f, fieldnames=fields or list(rows[0]))
-        w.writeheader()
-        w.writerows(rows)
 
 
 def evaluar_anio(value):

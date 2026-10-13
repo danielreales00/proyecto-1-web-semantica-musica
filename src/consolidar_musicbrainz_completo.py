@@ -4,8 +4,9 @@ import json
 from collections import Counter, defaultdict
 
 from ampliar_albumes import read, sha
-from diagnostico import ROOT, escribir_csv
 from extraer_musicbrainz_completo import OUT, load_json
+from musica.comun.archivos_csv import escribir_csv
+from musica.comun.rutas import ROOT
 
 
 def index(name):

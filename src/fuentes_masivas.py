@@ -8,7 +8,8 @@ import math
 import zipfile
 
 from descargar import FUENTES
-from diagnostico import ROOT, escribir_csv
+from musica.comun.archivos_csv import escribir_csv
+from musica.comun.rutas import ROOT
 
 
 def generos(ids):

@@ -1,0 +1,152 @@
+{
+  "metodo": "Comparación completa de conjuntos de resultados con cálculo independiente sobre los CSV; decimales comparados por valor",
+  "fuentes_sha256": {
+    "grabaciones_correspondencias_masivas.csv": "ab755249f43e361b85aa2784299eba08ffbc4af993584f51385aad28aeb17c0f",
+    "musicbrainz_correspondencias.csv": "99127c3b1d69a3dc96695069bdabb58a3f2c86da369cb7ee7745089a5d4283f6",
+    "creditos_grabaciones_masivos.csv": "229a3da222e5332477fac24cb77e2c9bc73d26bebf814d0aab0d5aad4a99141a",
+    "creditos_grabacion.csv": "9031f7363a4324f334194c7c009e5be57179137c559dd0b8720357535cd850ed",
+    "cancion_genero.csv": "18c557d1eae34fe6bb297b20e931f4194ee064e0b481a4c8c0917a33feeb904e",
+    "acousticbrainz_masivo.csv": "58e08ca0a747f674b1972be0765f1d5b4434f7c4c877fb9c82568b61e29f0229",
+    "acousticbrainz.csv": "858907bdfeed847691fd061b46bd0b04e13124997e57269c55bf34da018ac570",
+    "relaciones_musicales_masivas.csv": "91bae35730821bcafb8bca03ab82848c1ac187a5c76614a69743e4b5ddb3310d",
+    "relaciones_musicbrainz.csv": "486419d39c065fa7fe2d6ba0295b786404091460e5111b7cf2051e1f15f245d1",
+    "grabacion_lanzamiento_masivo.csv": "d4277cf056248ab00474a32cb786f2a8770fd551fd3f4d28603957b4dd186bd4",
+    "grabacion_lanzamiento.csv": "e5a0fda68e9c6a80308f4a513cddf44e3dad9c253d627ef45cfa7cff374decd8",
+    "lanzamientos_masivos.csv": "073ec951f6ed342589841b3d2a1cf97b9d2ac2bdd083d6519b449c473ec04cf0",
+    "lanzamientos.csv": "9e6164b6d371a4ef0219549332bec6d78d77dde01910515c1df29a1ecf4d4b4d",
+    "lanzamiento_sello_masivo.csv": "ba5d3e8d0b849818bbc86f96a70a8d995f7501beb941bce00c54297ccb405135",
+    "artistas_masivos.csv": "a6cea051c369405482576c8c2dbe340fb40828b9f437b5d0a566b12e84db5558",
+    "artistas.csv": "cf5030540271a15f833d0c11e0b9ab14c811d9c30e139420cf5d38503a1891aa",
+    "grupo_lanzamiento_genero.csv": "899b4b877700608636105af0279617034c5426abfb206a193b3d64f7ab71f1b3",
+    "wikidata_hechos.csv": "b00ec7a29f56da808405ca30992244f793d19502503d525388d4b02f0695b28b"
+  },
+  "preguntas": [
+    {
+      "pregunta": 1,
+      "filas": 2731,
+      "esperadas": 2731,
+      "sobrantes": 0,
+      "faltantes": 0,
+      "duplicadas": 0,
+      "campos_no_ligados": {
+        "grabacion": 0,
+        "analisis": 0,
+        "bpm": 0
+      },
+      "sha256_consulta": "942b38b820fcbbeb902af738a7e598aa6a4774cbc1a74fb13122888ed0071c32",
+      "sha256_resultado": "eadb18fee9a2ab68edbd268d15d1217cd722030c97b420f269a9335d03c3ff76"
+    },
+    {
+      "pregunta": 2,
+      "filas": 2350,
+      "esperadas": 2350,
+      "sobrantes": 0,
+      "faltantes": 0,
+      "duplicadas": 0,
+      "campos_no_ligados": {
+        "grabacion": 0,
+        "captura": 0,
+        "artista": 0,
+        "posicion": 0,
+        "nombre": 0
+      },
+      "sha256_consulta": "835bc87b68ff5c1fd0e7f0587243acc72e3d45c43683eb9840011fb659f2b7f6",
+      "sha256_resultado": "97055ffbf8d4150e22cb3dc86eba40a2e0281a948240e0aa805a315849f3f998"
+    },
+    {
+      "pregunta": 3,
+      "filas": 278,
+      "esperadas": 278,
+      "sobrantes": 0,
+      "faltantes": 0,
+      "duplicadas": 0,
+      "campos_no_ligados": {
+        "obra": 0,
+        "mbid": 0,
+        "artista": 0,
+        "compositor": 44
+      },
+      "sha256_consulta": "64a4709051c2f87b8fc264dc7364cf7b953d20414f1af6db95bc1698c40c4c3a",
+      "sha256_resultado": "c2719ff7ec27b10a230744881fb4db3bdb1fbc4add07be7dca2e411a026a9a5d"
+    },
+    {
+      "pregunta": 4,
+      "filas": 63643,
+      "esperadas": 63643,
+      "sobrantes": 0,
+      "faltantes": 0,
+      "duplicadas": 0,
+      "campos_no_ligados": {
+        "grabacion": 0,
+        "lanzamiento": 0,
+        "grupo": 40
+      },
+      "sha256_consulta": "bdbae45380a847189d8b0f53264a633b50297dea1a08da1f69ae2074a27cf17c",
+      "sha256_resultado": "ac4b1c1187f9ae08156a34faaec86ed839a912dd172a6f4127c7ead6969d20f0"
+    },
+    {
+      "pregunta": 5,
+      "filas": 56819,
+      "esperadas": 56819,
+      "sobrantes": 0,
+      "faltantes": 0,
+      "duplicadas": 0,
+      "campos_no_ligados": {
+        "sello": 0,
+        "lanzamiento": 0,
+        "titulo": 0,
+        "catalogo": 9932
+      },
+      "sha256_consulta": "c9521f2a03f0329c1f333538eb5fe50f33b89ee1ec7e3cb5178a829fbf9203f8",
+      "sha256_resultado": "27286e8fb5b3915c9008de5592e4896394d6dc9d9bcdd0d39ddfd0eb3cdf3c8b"
+    },
+    {
+      "pregunta": 6,
+      "filas": 489,
+      "esperadas": 489,
+      "sobrantes": 0,
+      "faltantes": 0,
+      "duplicadas": 0,
+      "campos_no_ligados": {
+        "grabacion": 0,
+        "captura": 0,
+        "persona": 0,
+        "agrupacion": 0
+      },
+      "sha256_consulta": "29faf4312dbe3bc9e47fd450c05abb192509242a3a501de9d9cc7087a7704575",
+      "sha256_resultado": "6ca2480ef19a986c7e29cad19a5520e66269aacda279a6b8878782bf82b770bb"
+    },
+    {
+      "pregunta": 7,
+      "filas": 789,
+      "esperadas": 789,
+      "sobrantes": 0,
+      "faltantes": 0,
+      "duplicadas": 0,
+      "campos_no_ligados": {
+        "analisis": 0,
+        "grabacion": 0,
+        "bpm": 0,
+        "fuente": 0
+      },
+      "sha256_consulta": "7a8f262b7aa67519e72e7bc560e3a48acd7084cf58a12d350e0b4f6c09e13fc5",
+      "sha256_resultado": "e84d1248361ab197ac740103b2e6bab2a5d2500c3be59f92e9fb35ca96fcac14"
+    },
+    {
+      "pregunta": 8,
+      "filas": 1968,
+      "esperadas": 1968,
+      "sobrantes": 0,
+      "faltantes": 0,
+      "duplicadas": 0,
+      "campos_no_ligados": {
+        "genero": 0,
+        "grabaciones": 0,
+        "artistas": 0,
+        "grupos": 0
+      },
+      "sha256_consulta": "bee1b4c54d37d016c798cc7344d17a28a9d69a7ffdb266c03897d4699ea514e0",
+      "sha256_resultado": "9db379f14819094a2f4f53e28ba447da0f17cf80312a6841707481518873c0ad"
+    }
+  ]
+}

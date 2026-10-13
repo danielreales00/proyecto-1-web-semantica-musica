@@ -5,7 +5,8 @@ import hashlib
 import json
 from collections import Counter, defaultdict
 
-from diagnostico import ROOT, escribir_csv
+from musica.comun.archivos_csv import escribir_csv
+from musica.comun.rutas import ROOT
 from wikidata import PROPIEDADES, consultar
 
 

@@ -1,0 +1,10 @@
+PREFIX mus: <https://example.org/musica/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?grabacion ?lanzamiento ?grupo WHERE {
+  { SELECT ?grabacion WHERE {
+      ?grabacion a mus:Grabacion ; mus:apareceEn ?r .
+    } GROUP BY ?grabacion HAVING(COUNT(DISTINCT ?r) >= 2) }
+  ?grabacion mus:apareceEn ?lanzamiento .
+  OPTIONAL { ?lanzamiento mus:perteneceAGrupo ?grupo }
+} ORDER BY ?grabacion ?lanzamiento ?grupo

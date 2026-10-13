@@ -1,0 +1,8 @@
+PREFIX mus: <https://example.org/musica/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?grabacion ?analisis ?bpm WHERE {
+  ?grabacion a mus:Grabacion ; mus:tieneAsignacionGenero ?asignacion ; mus:tieneAnalisis ?analisis .
+  ?asignacion mus:generoAsignado <https://example.org/musica/GeneroMusical/tagtraum/Rock> ; mus:papelGenero "mayoritario" .
+  ?analisis mus:tempoBPM ?bpm . FILTER(?bpm > 120)
+} ORDER BY ?grabacion ?analisis

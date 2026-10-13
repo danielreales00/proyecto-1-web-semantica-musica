@@ -1,0 +1,14 @@
+PREFIX mus: <https://example.org/musica/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?sello ?lanzamiento ?titulo ?catalogo WHERE {
+  { SELECT ?sello WHERE {
+      ?r mus:publicadoPor ?sello .
+    } GROUP BY ?sello HAVING(COUNT(DISTINCT ?r) >= 2) }
+  ?lanzamiento mus:publicadoPor ?sello .
+  OPTIONAL { ?lanzamiento mus:titulo ?titulo }
+  OPTIONAL {
+    ?lanzamiento mus:tienePublicacion ?publicacion .
+    ?publicacion mus:selloPublicacion ?sello ; mus:numeroCatalogo ?catalogo .
+  }
+} ORDER BY ?sello ?lanzamiento ?titulo ?catalogo

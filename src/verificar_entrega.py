@@ -13,7 +13,7 @@ from pathlib import Path
 from pypdf import PdfReader
 
 from archivos_entrega import firma_entradas, huellas_entradas
-from diagnostico import ROOT
+from musica.comun.rutas import ROOT
 
 
 def sha(path):

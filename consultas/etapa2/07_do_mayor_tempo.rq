@@ -1,0 +1,9 @@
+PREFIX mus: <https://example.org/musica/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?analisis ?grabacion ?bpm ?fuente WHERE {
+  VALUES ?fuente { <https://example.org/musica/Fuente/acousticbrainz_dump> <https://example.org/musica/Fuente/acousticbrainz> }
+  ?analisis a mus:AnalisisAcustico ; mus:fuente ?fuente ; mus:tonica "C" ; mus:modo "major" ; mus:tempoBPM ?bpm .
+  FILTER(?bpm > 120)
+  ?grabacion mus:tieneAnalisis ?analisis .
+} ORDER BY ?analisis ?grabacion

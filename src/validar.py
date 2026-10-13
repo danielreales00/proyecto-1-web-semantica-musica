@@ -8,8 +8,8 @@ import math
 import random
 import zipfile
 
-from diagnostico import ROOT
 from integrar import leer
+from musica.comun.rutas import ROOT
 
 
 def validar_canciones(original, songs, check):
@@ -215,7 +215,7 @@ def main():
         == sum(r["enriquecida"] == "True" for r in songs),
         "Métricas y CSV coinciden",
     )
-    from diagnostico import escribir_csv
+    from musica.comun.archivos_csv import escribir_csv
 
     escribir_csv(ROOT / "docs/auditoria_evidencia.csv", review)
     result = {

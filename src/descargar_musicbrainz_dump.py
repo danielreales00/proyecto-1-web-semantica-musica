@@ -7,7 +7,7 @@ from datetime import datetime, timezone
 
 import requests
 
-from diagnostico import ROOT
+from musica.comun.rutas import ROOT
 
 
 def main():
