@@ -8,7 +8,8 @@ El diseño distingue composiciones, grabaciones, ediciones y grupos de lanzamien
 
 - [Modelo musical](docs/etapa2/modelo.md): entidades, relaciones, identidad y conocimiento incompleto.
 - [Mapeo de datos](docs/etapa2/mapeo_datos.md): significado de las transformaciones desde los CSV consolidados.
-- [Preguntas de competencia](docs/etapa2/preguntas_competencia.md): ocho preguntas y criterios de interpretación.
+- [Preguntas de competencia](docs/etapa2/preguntas_competencia.md): las ocho preguntas acordadas.
+- [Catálogo de la ontología](docs/etapa2/catalogo_ontologia.md): clases, propiedades, dominios, rangos y diez axiomas justificados.
 - [Decisiones de modelado](docs/etapa2/decisiones_modelado.md): eliminación de afirmaciones genéricas, distinción de ediciones y grupos, y cobertura de labels.
 - [Etapa 1](README.md): datos de origen y comandos de reproducción disponibles.
 
@@ -18,7 +19,20 @@ Estos documentos complementan el informe académico en LaTeX. La documentación 
 
 El procesamiento de la etapa 1 y sus pruebas permanecen operativos. Las utilidades compartidas están en src/musica/comun: rutas del proyecto, escritura CSV y normalización conservadora. Los comandos existentes de la etapa 1 conservan su forma de ejecución.
 
-La generación de ontology.ttl e instances.ttl, la validación de labels e idiomas y la ejecución en Fuseki todavía están pendientes de implementación. Este README no presenta comandos para funciones que aún no están disponibles.
+El esquema [ontology.ttl](ontology.ttl) se genera desde un catálogo declarativo en `src/musica/etapa2/vocabulario.py`; las construcciones OWL están en `ontologia.py` y la validación de etiquetas en `etiquetas.py`.
+
+Desde la raíz del repositorio, con Python 3.11 o posterior:
+
+```bash
+python -m pip install -r requirements.txt
+python src/generar_ontologia.py
+```
+
+El comando genera `ontology.ttl` y actualiza el catálogo Markdown. Antes de escribir, exige etiquetas no vacías con idioma BCP 47 para todos los recursos del esquema. La salida informa cobertura e idiomas. Acepta `--salida` y `--catalogo` para elegir otras rutas. El Turtle se ordena de forma determinista para facilitar su revisión en Git.
+
+Las pruebas se ejecutan con `python -m unittest discover -s tests`. Comprueban el esquema con RDFLib y PyOxigraph, las uniones de clases, los diez axiomas y la validación de etiquetas, incluidos objetos externos y nodos anónimos de dominio. No constituyen una prueba de consistencia con un razonador OWL.
+
+La generación de `instances.ttl`, las consultas y la ejecución en Fuseki siguen pendientes. El validador de etiquetas ya admite un grafo combinado de esquema e instancias; su integración en la transformación de los CSV será el siguiente paso.
 
 ## Archivos de la segunda entrega
 

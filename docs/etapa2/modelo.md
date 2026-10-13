@@ -15,6 +15,7 @@ El modelo representa obras, grabaciones, artistas y publicaciones musicales. Los
 | GrupoLanzamientos | Identidad que reúne ediciones relacionadas, identificada por grupo_lanzamiento_mbid. |
 | Album | Especialización de GrupoLanzamientos para grupos cuyo tipo primario sea Album. Single y EP mantienen su tipo propio. |
 | SelloDiscografico | Sello asociado con ediciones publicadas, identificado por label_mbid. |
+| PublicacionDiscografica | Asociación entre una edición y un sello que conserva el número de catálogo de ese par. |
 | GeneroMusical | Clasificación con identidad propia en su vocabulario de origen. Un mismo nombre en fuentes diferentes no establece equivalencia. |
 | CreditoArtistico | Crédito que conserva artista, sujeto acreditado, posición, nombre y frase de unión. Puede acreditar una grabación o un grupo de lanzamientos. |
 | AsignacionGenero | Clasificación de un sujeto con fuente y calificadores como papel o votos cuando existen. |
