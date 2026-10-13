@@ -70,3 +70,19 @@ python src/empaquetar_etapa2.py
 ```
 
 El paquete `output/entrega_etapa2.zip` incluye código, los 39 CSV de entrada, esquema, instancias, consultas, resultados y evidencia. Descomprimirlo antes de ejecutar los comandos. El archivo `MANIFIESTO_ETAPA2.json` permite verificar su integridad. Los datos voluminosos se distribuyen en el paquete, sin añadirse al historial Git.
+
+## Correspondencia con el enunciado
+
+| Requisito | Archivo o evidencia |
+| --- | --- |
+| Informe de máximo seis páginas con decisiones, cambios, RDFS, OWL, preguntas y dificultades | `latex/informe_etapa2.tex` y `output/pdf/informe_etapa2.pdf` |
+| Clases, subclases, propiedades, dominios y rangos | `ontology.ttl` y `docs/etapa2/catalogo_ontologia.md` |
+| Al menos ocho axiomas de tres tipos | Once axiomas de cuatro tipos, justificados en el informe |
+| Ocho preguntas y al menos cinco consultas relacionales | Ocho preguntas en `docs/etapa2/preguntas_competencia.md` y ocho consultas en `consultas/etapa2` |
+| Generación automática, URI reproducibles y separación de esquema e instancias | `src/generar_ontologia.py`, `src/generar_instancias.py` y `output/etapa2/instances.ttl` |
+| Parámetros centralizados de Fuseki | `src/configuracion.py` |
+| Carga y ejecución comprobables en Fuseki | `docs/etapa2/evidencia/fuseki_carga.json`, `consultas.json` y resultados completos |
+| Resultados reproducibles | `docs/etapa2/resultados`, auditoría independiente y comandos de reproducción |
+| Código fuente entregable | Incluido en el ZIP. Si se entrega mediante GitHub, el repositorio debe ser público y contener esta versión |
+
+No es obligatorio entregar un servidor Fuseki activo. Docker facilita la reproducción. La extracción desde texto es un bonus opcional y la alineación con otras ontologías no se exige en esta etapa.
