@@ -1,62 +1,62 @@
 {
   "endpoint": "http://localhost:3030/musica/query",
-  "fecha_utc": "2026-10-13T01:56:55.022630+00:00",
+  "fecha_utc": "2026-10-13T03:37:43.701615+00:00",
   "inferencia": "ninguna; triples explícitos",
   "consultas": [
     {
       "consulta": "01_rock_tempo.rq",
       "sha256": "942b38b820fcbbeb902af738a7e598aa6a4774cbc1a74fb13122888ed0071c32",
       "filas": 2731,
-      "segundos": 1.154,
+      "segundos": 1.74,
       "http": 200
     },
     {
       "consulta": "02_creditos_ordenados.rq",
       "sha256": "835bc87b68ff5c1fd0e7f0587243acc72e3d45c43683eb9840011fb659f2b7f6",
       "filas": 2350,
-      "segundos": 1.422,
+      "segundos": 0.542,
       "http": 200
     },
     {
       "consulta": "03_obras_grabaciones_compositores.rq",
-      "sha256": "9c060ebafa09cbc40cc3f71ebcada8b1d0aa2bd29c3869fe260665b35c6f990b",
+      "sha256": "64a4709051c2f87b8fc264dc7364cf7b953d20414f1af6db95bc1698c40c4c3a",
       "filas": 278,
-      "segundos": 0.575,
+      "segundos": 0.208,
       "http": 200
     },
     {
       "consulta": "04_ediciones_grupos.rq",
       "sha256": "bdbae45380a847189d8b0f53264a633b50297dea1a08da1f69ae2074a27cf17c",
       "filas": 63643,
-      "segundos": 5.077,
+      "segundos": 2.513,
       "http": 200
     },
     {
       "consulta": "05_sellos_catalogos.rq",
       "sha256": "c9521f2a03f0329c1f333538eb5fe50f33b89ee1ec7e3cb5178a829fbf9203f8",
       "filas": 56819,
-      "segundos": 5.098,
+      "segundos": 2.731,
       "http": 200
     },
     {
       "consulta": "06_persona_agrupacion.rq",
       "sha256": "29faf4312dbe3bc9e47fd450c05abb192509242a3a501de9d9cc7087a7704575",
       "filas": 489,
-      "segundos": 0.884,
+      "segundos": 0.494,
       "http": 200
     },
     {
       "consulta": "07_do_mayor_tempo.rq",
       "sha256": "7a8f262b7aa67519e72e7bc560e3a48acd7084cf58a12d350e0b4f6c09e13fc5",
       "filas": 789,
-      "segundos": 0.204,
+      "segundos": 0.114,
       "http": 200
     },
     {
       "consulta": "08_generos_por_categoria.rq",
       "sha256": "bee1b4c54d37d016c798cc7344d17a28a9d69a7ffdb266c03897d4699ea514e0",
       "filas": 1968,
-      "segundos": 1.394,
+      "segundos": 0.676,
       "http": 200
     }
   ]

@@ -48,6 +48,8 @@ La salida está en `output/etapa2`. Las ocho consultas están implementadas y su
 
 ```bash
 python src/consultar_etapa2.py
+python src/auditar_consultas.py
+python src/generar_evidencias_consultas.py
 python -m pip install -r requirements-owl.txt
 python src/verificar_owl.py --docker-java
 ```

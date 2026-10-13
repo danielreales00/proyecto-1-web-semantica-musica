@@ -3,8 +3,10 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 SELECT DISTINCT ?obra ?mbid ?artista ?compositor WHERE {
   { SELECT ?obra WHERE {
-      ?g mus:interpretaObra ?obra ; mus:mbid ?r ; mus:tieneCredito/mus:artistaAcreditado ?a .
+      ?g mus:interpretaObra ?obra ; mus:mbid ?r .
+      OPTIONAL { ?g mus:tieneCredito/mus:artistaAcreditado ?a }
     } GROUP BY ?obra HAVING(COUNT(DISTINCT ?r) >= 2 && COUNT(DISTINCT ?a) >= 2) }
-  ?grabacion mus:interpretaObra ?obra ; mus:mbid ?mbid ; mus:tieneCredito/mus:artistaAcreditado ?artista .
+  ?grabacion mus:interpretaObra ?obra ; mus:mbid ?mbid .
+  OPTIONAL { ?grabacion mus:tieneCredito/mus:artistaAcreditado ?artista }
   OPTIONAL { ?compositor mus:compuso ?obra }
 } ORDER BY ?obra ?mbid ?artista ?compositor

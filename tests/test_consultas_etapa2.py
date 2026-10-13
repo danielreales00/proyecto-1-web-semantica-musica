@@ -41,6 +41,16 @@ class ConsultasTest(unittest.TestCase):
             2,
         )
 
+    def test_obra_conserva_grabacion_sin_creditos(self):
+        datos = """ :g1 mus:interpretaObra :obra; mus:mbid "m1"; mus:tieneCredito :c1, :c2 .
+        :g2 mus:interpretaObra :obra; mus:mbid "m2" .
+        :c1 mus:artistaAcreditado :a . :c2 mus:artistaAcreditado :b ."""
+        filas = self.consultar(3, datos)
+        self.assertEqual(len(filas), 3)
+        sin_credito = next(f for f in filas if str(f.mbid) == "m2")
+        self.assertIsNone(sin_credito.artista)
+        self.assertIsNone(sin_credito.compositor)
+
     def test_catalogo_no_se_atribuye_a_otro_sello(self):
         datos = """ :r1 mus:publicadoPor :s1, :s2; mus:tienePublicacion :p1, :p2 .
         :r2 mus:publicadoPor :s1 .

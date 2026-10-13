@@ -43,3 +43,18 @@ python src/verificar_owl.py --docker-java
 ```
 
 Con Java instalado localmente se puede omitir `--docker-java`. La revisión usa el esquema completo y casos controlados. Confirma consistencia del esquema y seis inferencias; exige detectar dos casos deliberadamente inconsistentes. No ejecuta HermiT sobre las 742.915 instancias. Los controles del conjunto completo están en `instances.validacion.json`.
+
+## Auditoría independiente y extractos de evidencia
+
+```bash
+python src/auditar_consultas.py
+python src/generar_evidencias_consultas.py
+```
+
+La auditoría reconstruye las ocho respuestas directamente desde los CSV, sin ejecutar SPARQL ni importar el generador RDF. Compara conjuntos completos de filas y columnas, normaliza los BPM por valor decimal y detecta filas faltantes, sobrantes o duplicadas. Las ocho consultas coinciden: cero diferencias y cero duplicados. `evidencia/auditoria_consultas.json` registra huellas SHA-256 de entradas, consultas y resultados.
+
+La PC3 cuenta los artistas del conjunto de grabaciones: una grabación sin crédito conocido se conserva si la obra cumple ambos umbrales. Una prueba de regresión cubre esta situación.
+
+Hay valores no ligados: 44 filas sin compositor (PC3), 40 sin grupo (PC4) y 9.932 sin catálogo (PC5). La consulta responde con el conocimiento disponible; esas filas no proporcionan todos los campos solicitados. Ausencia no equivale a inexistencia.
+
+`evidencia/muestras_consultas.json` adjunta filas reales y nombres recuperados de los CSV. El PDF presenta estos extractos junto a cada pregunta. Los extractos no sustituyen los resultados completos ni la auditoría; las etiquetas añadidas solo facilitan su lectura.

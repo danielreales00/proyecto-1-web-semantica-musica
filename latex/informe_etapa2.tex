@@ -2,7 +2,7 @@
 \usepackage{fontspec}
 \usepackage[spanish]{babel}
 \usepackage[margin=2.1cm]{geometry}
-\usepackage{booktabs,tabularx,array,enumitem,xcolor,xurl,hyperref,fancyhdr}
+\usepackage{booktabs,tabularx,array,enumitem,xurl,hyperref,fancyhdr}
 \setlength{\emergencystretch}{3em}
 \newcolumntype{Y}{>{\raggedright\arraybackslash}X}
 \hypersetup{colorlinks=true,urlcolor=blue,linkcolor=blue,pdftitle={Ontología musical - Etapa 2}}
@@ -12,37 +12,40 @@
 \pagestyle{fancy}\fancyhf{}\fancyhead[L]{Web Semántica MISIS}\fancyhead[R]{Grupo 2 | Etapa 2}\fancyfoot[C]{\thepage}
 \setlength{\headheight}{14pt}
 \newcommand{\term}[1]{\texttt{#1}}
+\usepackage[table]{xcolor}
+\definecolor{suave}{RGB}{239,244,248}
+\renewcommand{\arraystretch}{1.3}
+\setlength{\tabcolsep}{7pt}
+\makeatletter
+\renewcommand\subsection{\@startsection{subsection}{2}{\z@}{-2ex plus -.5ex minus -.2ex}{.8ex plus .2ex}{\normalfont\normalsize\bfseries}}
+\makeatother
 \begin{document}
 \begin{center}
 {\LARGE\bfseries Ontología para la exploración musical}\par
-{\large Formalización, población y consulta}\par
-Grupo 2 | Octubre de 2026
+{\large Segunda entrega | Grupo 2 | Octubre de 2026}
 \end{center}
-\section{Objetivo y revisión del modelo}
-La segunda etapa transforma los datos consolidados de 100.000 entradas musicales en una ontología reproducible. El producto considerado es un explorador de grabaciones, colaboraciones, obras y publicaciones: permite cruzar géneros y características acústicas, consultar créditos ordenados y recorrer las relaciones entre composiciones, ediciones y sellos.
+\section{Modelo y cambios justificados}
+El explorador conecta grabaciones, artistas, composiciones, ediciones, sellos y análisis acústicos. El esquema contiene \textbf{19 clases y 70 propiedades} (21 de objeto y 49 de datos). Parte de 39 CSV y 100.000 referencias locales de grabación.
 
-El modelo conserva la distinción entre una \textbf{obra musical}, entendida como composición abstracta, y una \textbf{grabación}, que representa una realización sonora. Asimismo, un \textbf{lanzamiento} es una edición publicada; un \textbf{grupo de lanzamientos} reúne ediciones relacionadas. Álbum, sencillo y EP son especializaciones del grupo, no de la edición.
-
-\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{3.5cm}Y@{}}\toprule
-Cambio frente al modelo inicial & Justificación\\\midrule
-Eliminar RegistroDataset y RegistroCancion del núcleo & Una fila no aporta por sí misma una entidad musical. Su evidencia se conserva en tablas identificadas mediante huellas SHA-256.\\
-Eliminar AfirmacionExterna & Composición, producción e interpretación se expresan con relaciones tipadas, sin convertir todos los hechos en una misma entidad genérica.\\
-Generalizar CreditoArtistico & Conserva artista, sujeto acreditado, nombre y posición. Puede pertenecer a una grabación o a un grupo.\\
-Separar AnalisisAcustico & Evita mezclar tempo, tonalidad y descriptores de diferentes análisis o capturas.\\
-Calificar publicación y género & PublicacionDiscografica conserva el catálogo del par edición--sello. AsignacionGenero conserva papel, votos y procedencia.\\\bottomrule
+\begin{tabularx}{\textwidth}{@{}YY@{}}\toprule
+\textbf{Cambio} & \textbf{Justificación semántica}\\\midrule
+\textbf{Retirar RegistroDataset y RegistroCancion del núcleo musical.} & Una fila es evidencia de datos. La procedencia se conserva con CapturaFuente y la huella de cada CSV.\\\addlinespace[4pt]
+\textbf{Retirar AfirmacionExterna.} Usar compuso, produjo e interpretaObra. & Las relaciones tipadas expresan directamente el papel musical y permiten consultarlo.\\\addlinespace[4pt]
+\textbf{Distinguir obra y grabación; edición y grupo de lanzamientos.} & Una composición admite varias grabaciones. Varias ediciones pueden pertenecer al mismo álbum, sencillo o EP.\\\addlinespace[4pt]
+\textbf{Conservar CreditoArtistico y AnalisisAcustico como entidades.} & El crédito tiene artista, posición y captura. El análisis reúne mediciones de una misma observación.\\\addlinespace[4pt]
+\textbf{Conservar PublicacionDiscografica y AsignacionGenero.} & El catálogo depende del par edición--sello. El género puede tener papel, votos y procedencia. Una relación simple perdería esos atributos.\\\bottomrule
 \end{tabularx}
 
-\subsection{Estructura formal}
-El esquema tiene 19 clases y 70 propiedades: 21 de objeto y 49 de datos. Se genera con Python y RDFLib en \term{ontology.ttl}. Las clases se declaran con \term{owl:Class}; sus jerarquías, mediante \term{rdfs:subClassOf}. Persona y Agrupacion especializan Artista. Las propiedades incluyen dominio, rango, etiqueta y descripción.
+\subsection*{Jerarquía, identidad y etiquetas}
+Persona y Agrupacion especializan Artista; Album, Sencillo y EP especializan GrupoLanzamientos. Compositor y productor se modelan como roles. El dominio de tieneCredito es una \emph{unión} de Grabacion y GrupoLanzamientos: dos dominios separados impondrían ambas clases.
 
-El dominio de \term{tieneCredito} es la unión de Grabacion y GrupoLanzamientos. Una unión OWL evita el error de declarar dos dominios RDFS independientes, lo que implicaría pertenencia a ambas clases. Compositor y productor son roles compatibles expresados por \term{compuso} y \term{produjo}.
+Las URI locales usan track\_id; los recursos externos conservan sus identificadores. No se deduce igualdad por nombre ni desigualdad por tener URI diferentes. Los nodos anónimos servirían para asociaciones sin identidad pública, pero no reemplazan su significado ni sus atributos; aquí se usan URI estables para trazabilidad.
 
+Todas las clases, propiedades e instancias tienen etiquetas no vacías con idioma: \texttt{@es} para descripciones generadas, \texttt{@und} cuando el idioma del nombre no está verificado y el idioma de origen para Wikidata. Solo se exceptúan estructuras OWL y listas RDF.
 \newpage
-\section{Construcciones OWL e interpretación}
-Se incorporaron once axiomas de cuatro tipos, además de las jerarquías y uniones. Cada construcción responde al significado del dominio.
-
-\begin{tabularx}{\textwidth}{@{}p{0.8cm}>{\raggedright\arraybackslash}p{3cm}Y@{}}\toprule
-ID & Construcción & Significado y justificación\\\midrule
+\section{OWL: axiomas y evidencia}
+\begin{tabularx}{\textwidth}{@{}p{0.8cm}>{\raggedright\arraybackslash}p{3.2cm}Y@{}}\toprule
+\textbf{ID} & \textbf{Construcción} & \textbf{Significado y justificación}\\\midrule
 A01 & Clases disjuntas & Persona y Agrupacion: un artista individual no es un colectivo.\\
 A02 & Clases disjuntas & Grabacion y ObraMusical: la realización sonora se distingue de la composición.\\
 A03 & Clases disjuntas & Lanzamiento y GrupoLanzamientos: una edición no es el grupo que reúne ediciones.\\
@@ -56,96 +59,107 @@ A10 & Cardinalidad exacta & Una AsignacionGenero tiene exactamente un generoAsig
 A11 & Cadena de propiedades & tienePublicacion seguida de selloPublicacion implica publicadoPor. El sello de la asociación editorial publica esa edición.\\\bottomrule
 \end{tabularx}
 
-\subsection{Mundo abierto e identidad}
-Las cardinalidades son calificadas: restringen los valores de una clase determinada. Bajo la suposición de mundo abierto, la ausencia de un triple no prueba la inexistencia del valor. Dos URI tampoco prueban dos individuos diferentes. Por ello, una cardinalidad exacta no sustituye una comprobación de completitud sobre el archivo exportado.
+\textbf{Mundo abierto.} Un valor ausente es desconocido; una cardinalidad no valida completitud. Para probar una contradicción por dos valores se requiere establecer que son diferentes. Los controles de archivos se ejecutan por separado.
 
-No se declaran propiedades transitivas o simétricas sin justificación musical. Tampoco se usan MBID o ISRC como propiedades inversamente funcionales, ni se infiere \term{owl:sameAs} por compartir una etiqueta. Los identificadores locales diferentes no producen \term{owl:differentFrom}.
-
-Los vínculos publicados se exportan explícitamente cuando están respaldados por una fila. La cadena A11 permite deducir la misma relación desde la asociación edición--sello. Fuseki consulta triples explícitos: cargar axiomas OWL no activa automáticamente un razonador.
-
+\textbf{Evidencia HermiT:} esquema consistente, ninguna clase insatisfacible; seis inferencias comprobadas (cuatro inversas, una cadena y una jerarquía) y dos contradicciones deliberadas detectadas. Archivo: \texttt{docs/etapa2/evidencia/razonamiento.json}. Se evaluó el esquema completo y casos controlados, no toda la población. Fuseki consulta los triples explícitos sin razonamiento OWL automático.
 \newpage
-\section{Preguntas de competencia}
-Las preguntas se fijaron antes de poblar completamente la ontología. Se implementaron las ocho, superando el mínimo de cinco exigido. Todas consultan relaciones del modelo; sus resultados completos se entregan en CSV y JSON.
-
-\begin{enumerate}[itemsep=9pt]
-\item ¿Qué grabaciones tienen Rock como género mayoritario y un tempo medido superior a 120 BPM?
-\item ¿Qué grabaciones acreditan al menos a dos artistas distintos y en qué orden aparecen esos artistas en los créditos de la grabación?
-\item ¿Qué obras musicales tienen al menos dos grabaciones distintas que, en conjunto, acreditan al menos a dos artistas distintos, y qué compositores están asociados a esas obras, si se dispone de esa información?
-\item ¿Qué grabaciones aparecen en al menos dos lanzamientos distintos y a qué grupo de lanzamientos pertenece cada uno?
-\item ¿Qué sellos discográficos publicaron al menos dos lanzamientos distintos y cuáles son los títulos y los números de catálogo de esos lanzamientos?
-\item ¿Qué grabaciones acreditan tanto a un artista individual como a una agrupación musical?
-\item ¿Qué análisis de AcousticBrainz reportan tanto una tonalidad de do mayor como un tempo superior a 120 BPM y qué grabaciones describen esos análisis?
-\item Para cada género musical, ¿cuántas grabaciones, artistas y grupos de lanzamientos están clasificados en él, contando por separado cada una de estas tres categorías?
-\end{enumerate}
-
-\subsection{Criterios operativos de consulta}
-Rock en la primera pregunta identifica el recurso del vocabulario tagtraum, con papel \term{mayoritario}. Los créditos de las preguntas 2 y 6 se evalúan dentro de una misma captura para no combinar listas publicadas en momentos distintos. Su orden es la posición original, en base uno.
-
-En la pregunta 3 se cuentan MBID de grabación diferentes; dos referencias locales al mismo MBID no satisfacen el umbral. En las demás preguntas, cuando se devuelven grabaciones, se muestran referencias locales. Los conteos describen los identificadores representados en los datos, no una prueba ontológica de desigualdad entre individuos.
-
-Los compositores, grupos y números de catálogo ausentes se conservan como valores no ligados mediante \term{OPTIONAL}. En la pregunta 7, tónica, modo y tempo deben pertenecer al mismo análisis. La pregunta 8 mantiene los géneros separados por vocabulario de origen y cuenta cada categoría de forma independiente.
-
+\section{Preguntas 1--4: evidencia de respuesta}
+{\small Extractos reales de resultados completos, sin LIMIT. Nombres añadidos desde los CSV para lectura; URI completas en muestras\_consultas.json. Los identificadores abreviados se marcan con puntos suspensivos.}
+\subsection*{PC 1. ¿Qué grabaciones tienen Rock como género mayoritario y un tempo medido superior a 120 BPM?}
+\begin{tabularx}{\textwidth}{@{}YYr@{}}\toprule
+\textbf{Grabación} & \textbf{Género / papel} & \textbf{BPM}\\\midrule
+Chasing shadows & Rock / mayoritario & 126,966911316\\\addlinespace[4pt]
+Ionized & Rock / mayoritario & 138,80859375\\\bottomrule
+\end{tabularx}
+{\small Rock corresponde al vocabulario tagtraum. Cada tempo pertenece a un análisis de la grabación.}\subsection*{PC 2. ¿Qué grabaciones acreditan al menos a dos artistas distintos y en qué orden aparecen esos artistas en los créditos de la grabación?}
+\begin{tabularx}{\textwidth}{@{}YYr@{}}\toprule
+\textbf{Grabación} & \textbf{Artista acreditado} & \textbf{Posición}\\\midrule
+Boo & Randy Brecker & 1\\\addlinespace[4pt]
+Boo & Peter Erskine & 2\\\bottomrule
+\end{tabularx}
+{\small Extracto de una misma captura: créditos masivos, SHA-256 229a3da2\ldots. Orden original en base uno.}\subsection*{PC 3. ¿Qué obras musicales tienen al menos dos grabaciones distintas que, en conjunto, acreditan al menos a dos artistas distintos, y qué compositores están asociados a esas obras, si se dispone de esa información?}
+\begin{tabularx}{\textwidth}{@{}YYY@{}}\toprule
+\textbf{Obra / MBID grabación} & \textbf{Artista} & \textbf{Compositor}\\\midrule
+Lodi / 16803c92\ldots & The Flying Burrito Brothers & John Fogerty\\\addlinespace[4pt]
+Lodi / 191a9b8f\ldots & Tesla & John Fogerty\\\bottomrule
+\end{tabularx}
+{\small Dos MBID diferentes y dos artistas en conjunto. Se conservan grabaciones sin créditos cuando la obra satisface ambos umbrales.}\subsection*{PC 4. ¿Qué grabaciones aparecen en al menos dos lanzamientos distintos y a qué grupo de lanzamientos pertenece cada uno?}
+\begin{tabularx}{\textwidth}{@{}YYY@{}}\toprule
+\textbf{Grabación} & \textbf{Edición (MBID)} & \textbf{Grupo}\\\midrule
+Chasing shadows & ad7dbae7\ldots & Law of Retaliation\\\addlinespace[4pt]
+Chasing shadows & e27bd6df\ldots & Law of Retaliation\\\bottomrule
+\end{tabularx}
+{\small Son dos ediciones distintas del mismo grupo 3b626171\ldots; un título compartido no las convierte en una sola edición.}\newpage\section{Preguntas 5--8: evidencia de respuesta}\subsection*{PC 5. ¿Qué sellos discográficos publicaron al menos dos lanzamientos distintos y cuáles son los títulos y los números de catálogo de esos lanzamientos?}
+\begin{tabularx}{\textwidth}{@{}YYY@{}}\toprule
+\textbf{Sello} & \textbf{Título del lanzamiento} & \textbf{Catálogo}\\\midrule
+Atlantic & Yesterdays & AMCY-15\\\addlinespace[4pt]
+Atlantic & Running in Real Time & 7 81251-4\\\bottomrule
+\end{tabularx}
+{\small El catálogo pertenece a la asociación de cada edición con Atlantic.}\subsection*{PC 6. ¿Qué grabaciones acreditan tanto a un artista individual como a una agrupación musical?}
+\begin{tabularx}{\textwidth}{@{}YYY@{}}\toprule
+\textbf{Grabación} & \textbf{Persona} & \textbf{Agrupación}\\\midrule
+Boo & Tim Hagans & Norrbotten Big Band\\\bottomrule
+\end{tabularx}
+{\small Ambos créditos pertenecen a la misma captura 229a3da2\ldots.}\subsection*{PC 7. ¿Qué análisis de AcousticBrainz reportan tanto una tonalidad de do mayor como un tempo superior a 120 BPM y qué grabaciones describen esos análisis?}
+\begin{tabularx}{\textwidth}{@{}YYr@{}}\toprule
+\textbf{Análisis / grabación} & \textbf{Tonalidad} & \textbf{BPM}\\\midrule
+0026bc86\ldots / Mona Lisa Eyes & C / major & 146,966278076\\\addlinespace[4pt]
+00286722\ldots / Little Pig & C / major & 165,433990479\\\bottomrule
+\end{tabularx}
+{\small Fuente acousticbrainz\_dump; tonalidad y tempo se comprobaron en la misma fila de análisis.}\subsection*{PC 8. Para cada género musical, ¿cuántas grabaciones, artistas y grupos de lanzamientos están clasificados en él, contando por separado cada una de estas tres categorías?}
+\begin{tabularx}{\textwidth}{@{}Yrrr@{}}\toprule
+\textbf{Género: vocabulario / ID} & \textbf{Grab.} & \textbf{Art.} & \textbf{Grupos}\\\midrule
+tagtraum / Rock & 13.924 & 0 & 0\\\addlinespace[4pt]
+Wikidata / Q11366 & 0 & 1.129 & 0\\\addlinespace[4pt]
+MusicBrainz / 02b2f720\ldots & 0 & 0 & 544\\\bottomrule
+\end{tabularx}
+{\small Conteos independientes por URI de género. Cero significa que no hay miembros registrados en esa categoría; no afirma que no existan. No se fusionan vocabularios por etiqueta.}
+\subsection*{Cómo inspeccionar cada extracto}
+El número PC identifica el archivo \texttt{01\_*.rq} hasta \texttt{08\_*.rq}. \path{docs/etapa2/evidencia/muestras_consultas.json} conserva las filas originales y las etiquetas añadidas. Los resultados completos se adjuntan comprimidos en \texttt{docs/etapa2/resultados}; CSV y JSON sin comprimir están en el paquete de entrega.
 \newpage
-\section{Generación y calidad de las instancias}
-La transformación parte de los 39 CSV consolidados de la etapa 1. El vocabulario y las instancias se exportan por separado. El generador escribe incrementalmente para no mantener millones de triples en memoria. Las URI de grabación usan el identificador local \term{track\_id}; las entidades externas conservan su identificador dentro de su clase. Las asociaciones emplean hashes de claves compuestas y captura.
+\section{Auditoría de las respuestas completas}
+Un cálculo independiente sobre los CSV, sin ejecutar SPARQL ni importar el generador RDF, reconstruyó las respuestas esperadas. Se compararon \textbf{todas las filas y columnas}, normalizando los decimales por valor. Las huellas de fuentes, consultas y resultados quedan en \texttt{auditoria\_consultas.json}.
 
-\begin{tabularx}{\textwidth}{@{}Xr@{}}\toprule
-Magnitud & Total\\\midrule
-Referencias locales de grabación & 100.000\\
-Referencias con correspondencia aceptada & 32.175\\
-MBID de grabación aceptados distintos & 32.140\\
-Artistas & 48.592\\
-Obras musicales & 10.003\\
-Grupos de lanzamientos & 33.277\\
-Ediciones publicadas & 57.373\\
-Sellos discográficos & 8.699\\
-Créditos artísticos & 65.032\\
-Asignaciones de género & 137.218\\
-Análisis acústicos & 118.203\\
-Recursos de instancias etiquetados & 742.915\\\bottomrule
+\begin{tabularx}{\textwidth}{@{}Yrrrr@{}}\toprule
+\textbf{PC} & \textbf{Esperadas} & \textbf{Obtenidas} & \textbf{Sobran} & \textbf{Faltan}\\\midrule
+1 & 2.731 & 2.731 & 0 & 0\\\addlinespace[4pt]
+2 & 2.350 & 2.350 & 0 & 0\\\addlinespace[4pt]
+3 & 278 & 278 & 0 & 0\\\addlinespace[4pt]
+4 & 63.643 & 63.643 & 0 & 0\\\addlinespace[4pt]
+5 & 56.819 & 56.819 & 0 & 0\\\addlinespace[4pt]
+6 & 489 & 489 & 0 & 0\\\addlinespace[4pt]
+7 & 789 & 789 & 0 & 0\\\addlinespace[4pt]
+8 & 1.968 & 1.968 & 0 & 0\\\bottomrule
 \end{tabularx}
 
-Una correspondencia ambigua no proyecta hechos de sus candidatos. El volcado tiene prioridad sobre el piloto; un conflicto se registra sin mezclar grabaciones. En esta ejecución no hubo conflictos entre correspondencias aceptadas. Las 35 referencias adicionales que comparten MBID mantienen sus URI locales.
+No se encontraron filas duplicadas. Las filas no equivalen siempre a entidades: PC1 cubre 2.709 grabaciones; PC2, 1.042; PC3, 96 obras; PC4, 15.635 grabaciones; PC5, 4.388 sellos; PC6, 389 grabaciones; PC7, 789 análisis; PC8, 1.968 géneros.
 
-jMIR aporta 99.465 análisis de fragmentos. AcousticBrainz conserva 18.560 análisis del volcado y 178 del piloto, separados por captura. Un análisis compartido se vincula a todas sus referencias locales sin duplicarlo. La extensión del audio de AcousticBrainz no se presupone completa.
-
-\subsection{Etiquetas y procedencia}
-Toda clase, propiedad e instancia de dominio o evidencia tiene una etiqueta no vacía con idioma válido. Se usa \term{@und} para nombres cuyo idioma no está comprobado; las descripciones generadas usan \term{@es}. Wikidata conserva el idioma de sus etiquetas. Los nodos estructurales de OWL y las listas RDF están exentos; los recursos anónimos de dominio no lo están.
-
-Cada CSV tiene una CapturaFuente con nombre y SHA-256. Los recursos enlazan las tablas que los respaldan. El informe de transformación registra las huellas de entrada y salida, los conteos y las filas sin proyección musical. Los campos no modelados permanecen en las tablas de evidencia: conservarlas no significa que todos sus campos hayan sido convertidos en triples.
-
-\newpage
-\section{Carga, consultas y validación}
-Apache Jena Fuseki 6.2.0 se ejecuta en Docker con almacenamiento persistente TDB2. El esquema y las instancias se cargan en dos grafos nombrados; la vista predeterminada consulta su unión. Ambas cargas devolvieron HTTP 201. Las consultas devolvieron HTTP 200.
-
-El endpoint contiene 466 triples de esquema y 7.606.648 triples distintos de instancias, para un total de \textbf{7.607.114}. Las repeticiones textuales del archivo de exportación se eliminan por la semántica de conjunto del grafo. Fuseki confirmó las 100.000 referencias de grabación.
-
-\begin{tabularx}{\textwidth}{@{}p{0.6cm}rY@{}}\toprule
-PC & Filas & Interpretación principal\\\midrule
-1 & 2.731 & 2.709 referencias con Rock mayoritario y al menos un análisis superior a 120 BPM.\\
-2 & 2.350 & Créditos ordenados de 1.042 referencias con dos o más artistas en una captura.\\
-3 & 278 & 96 obras con al menos dos MBID de grabación y dos artistas; incluye compositores disponibles.\\
-4 & 63.643 & Relaciones edición--grupo de 15.635 referencias con varias ediciones.\\
-5 & 56.819 & Ediciones y catálogos asociados a 4.388 sellos con dos o más ediciones.\\
-6 & 489 & Combinaciones persona--agrupación en 389 referencias de grabación.\\
-7 & 789 & Análisis en do mayor y superiores a 120 BPM, con su grabación asociada.\\
-8 & 1.968 & Géneros de vocabularios distintos, con conteos separados de las tres categorías.\\\bottomrule
+\subsection*{Información que la fuente no permite completar}
+\begin{tabularx}{\textwidth}{@{}YrY@{}}\toprule
+\textbf{Campo no ligado} & \textbf{Filas} & \textbf{Tratamiento}\\\midrule
+PC3: compositor & 44 & Se devuelve la obra sin inventar un compositor.\\\addlinespace[4pt]
+PC4: grupo de lanzamientos & 40 & Se conserva la edición; su grupo es desconocido.\\\addlinespace[4pt]
+PC5: número de catálogo & 9.932 & Se conserva la publicación; su catálogo es desconocido.\\\bottomrule
 \end{tabularx}
 
-Las filas no equivalen siempre al número de entidades: una grabación puede tener varios análisis, créditos o ediciones. Las consultas completas no usan límites que recorten los resultados. Los JSON preservan tipos y los CSV facilitan inspección; el resumen registra el hash de cada consulta y su tiempo de ejecución.
+Estas respuestas son correctas respecto de los datos disponibles, pero esas filas no ofrecen toda la información solicitada. OPTIONAL hace explícita la incompletitud. La coincidencia del cálculo no garantiza la veracidad de la fuente ni completa el mundo abierto.
 
-\subsection{Controles de integridad}
-Un segundo motor, PyOxigraph, leyó los Turtle y verificó la ausencia de recursos sin etiqueta, etiquetas vacías o sin idioma válido, propiedades no declaradas, créditos sin artista o sujeto único y asignaciones sin género único. También se comprobaron los tipos explícitos disjuntos y la coherencia de la asociación edición--sello con la relación directa.
-
-Las pruebas automatizadas incluyen casos negativos: no combinar créditos de capturas distintas, no contar dos referencias del mismo MBID como dos grabaciones para la pregunta 3, no atribuir el catálogo de un sello a otro y no combinar tempo y tonalidad de análisis distintos. Estos controles de datos complementan OWL; no se presentan como razonamiento completo sobre millones de triples.
-
-HermiT, mediante Owlready2 0.49, confirmó la consistencia del esquema completo y la ausencia de clases insatisfacibles. Sobre casos controlados verificó seis inferencias: cuatro inversas, la cadena de publicación y la pertenencia de Persona a Artista. También detectó contradicciones deliberadas de disjunción y cardinalidad con individuos declarados diferentes. Esta prueba no ejecutó HermiT sobre la totalidad de las instancias.
-
+\subsection*{Regresiones sobre el significado}
+Las pruebas verifican: capturas separadas; dos referencias al mismo MBID no cuentan como dos grabaciones en PC3; una grabación sin créditos no desaparece de una obra que cumple el umbral; un catálogo no se atribuye a otro sello; tonalidad y tempo no se combinan entre análisis; las asignaciones repetidas no multiplican conteos.
 \newpage
-\section{Reproducción, alcance y dificultades}
-Los comandos se ejecutan desde la raíz del repositorio, con Python 3.11 o posterior y los CSV consolidados disponibles. Las direcciones de conexión están centralizadas en \term{src/configuracion.py}.
+\section{Entrega, ejecución y controles}
+\begin{tabularx}{\textwidth}{@{}YY@{}}\toprule
+\textbf{Evidencia} & \textbf{Resultado registrado}\\\midrule
+Esquema / instancias en Fuseki & 466 / 7.606.648 triples distintos; total 7.607.114.\\\addlinespace[4pt]
+Carga y consultas HTTP & Dos cargas: 201; ocho consultas: 200.\\\addlinespace[4pt]
+Cobertura de identidad & 100.000 referencias; 32.175 correspondencias aceptadas; 32.140 MBID distintos.\\\addlinespace[4pt]
+Etiquetas de instancias & 742.915 recursos etiquetados; controles sin faltantes ni idiomas inválidos.\\\addlinespace[4pt]
+Integridad de relaciones & Sin créditos o asignaciones que incumplan los controles de cardinalidad exportada; sin conflictos explícitos de tipos disjuntos.\\\bottomrule
+\end{tabularx}
 
-\begin{verbatim}
+
+\subsection*{Reproducción desde la raíz del repositorio}
+{\small\begin{verbatim}
 python -m pip install -r requirements.txt
 python src/generar_ontologia.py
 python src/generar_instancias.py
@@ -153,24 +167,16 @@ python src/validar_instancias.py
 docker compose up -d --build
 python src/cargar_fuseki.py
 python src/consultar_etapa2.py
-\end{verbatim}
+python src/auditar_consultas.py
+python src/generar_evidencias_consultas.py
+python -m unittest discover -s tests
+\end{verbatim}}
+Fuseki 6.2.0 usa TDB2 persistente y dos grafos nombrados con unión predeterminada. La configuración está centralizada en \texttt{src/configuracion.py}. HermiT se reproduce con \texttt{requirements-owl.txt} y \texttt{python src/verificar\_owl.py --docker-java}.
 
-Los archivos de consultas están en \term{consultas/etapa2}. Los resultados y la evidencia HTTP están en \term{output/etapa2}. La documentación complementaria incluye el catálogo de clases y propiedades, las decisiones de modelado, el mapeo de CSV y las instrucciones del servicio. El código separa lectura, identidad, relaciones, mediciones, escritura y validación para facilitar su revisión.
+\subsection*{Archivos adjuntos y alcance}
+El ZIP incluye esquema, instancias, 39 CSV, código, consultas, resultados, evidencias, README, LaTeX y PDF; un manifiesto SHA-256 identifica cada archivo. El catálogo completo, el mapeo y las decisiones detalladas están en \texttt{docs/etapa2}. La escritura incremental permite producir 1,69 GB de Turtle sin cargar todo el grafo en memoria.
 
-\subsection{Problemas encontrados y decisiones}
-\begin{itemize}[itemsep=5pt]
-\item \textbf{Identidad local frente a externa.} Varias entradas pueden describir el mismo MBID. Se conservan las referencias locales y se explicita la unidad de conteo de cada consulta.
-\item \textbf{Capturas diferentes.} El piloto y los volcados tienen coberturas distintas. Créditos y análisis permanecen separados; una ausencia no implica inexistencia bajo mundo abierto.
-\item \textbf{Metadatos incompletos.} Hay publicaciones con catálogo y sin sello conocido. Se conserva el catálogo sin inventar un sello. Los nombres faltantes reciben etiquetas descriptivas deterministas.
-\item \textbf{Volumen del RDF.} El Turtle ocupa aproximadamente 1,69 GB. La escritura incremental y la validación con almacenamiento temporal evitan cargar todo el grafo en objetos Python. Se incluye una copia comprimida de aproximadamente 102 MB.
-\item \textbf{Alcance del enriquecimiento.} Se proyectan los hechos necesarios para el modelo y las preguntas. Otros roles musicales, eventos de publicación y propiedades de Wikidata distintas de género permanecen en la evidencia CSV. No se implementó el bonus de extracción de texto ni alineación con ontologías externas.
-\end{itemize}
+Se preservan las capturas piloto y masivas; los campos no proyectados permanecen en los CSV. No se implementó el bonus opcional de extracción desde texto. La alineación con ontologías externas corresponde a una etapa posterior.
 
-\subsection{Referencias técnicas}
-\begin{enumerate}[label={[\arabic*]},itemsep=4pt]
-\item W3C. \emph{OWL 2 Web Ontology Language Primer}. \url{https://www.w3.org/TR/owl2-primer/}
-\item W3C. \emph{RDF Schema 1.1}. \url{https://www.w3.org/TR/rdf-schema/}
-\item Apache Jena. \emph{Configuring Fuseki}. \url{https://jena.apache.org/documentation/fuseki2/fuseki-configuration.html}
-\item MusicBrainz. \emph{Release Group}. \url{https://musicbrainz.org/doc/Release_Group}
-\end{enumerate}
+{\small\textbf{Referencias:} W3C, \href{https://www.w3.org/TR/owl2-primer/}{OWL 2 Primer} y \href{https://www.w3.org/TR/rdf-schema/}{RDF Schema 1.1}; Apache Jena, \href{https://jena.apache.org/documentation/fuseki2/fuseki-configuration.html}{configuración de Fuseki}; MusicBrainz, \href{https://musicbrainz.org/doc/Release_Group}{Release Group}.}
 \end{document}
